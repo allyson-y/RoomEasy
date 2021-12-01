@@ -1,0 +1,3 @@
+[submodule "rmeasy_flutter/rmeasy"]
+	path = rmeasy_flutter/rmeasy
+	url = https://github.com/kevindkim723/rmeasy.git
