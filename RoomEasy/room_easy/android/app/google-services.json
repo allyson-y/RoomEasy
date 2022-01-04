@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "667338333504",
+    "project_id": "roomeasy-6caf4",
+    "storage_bucket": "roomeasy-6caf4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:667338333504:android:fb99ae0ed380880d816ea5",
+        "android_client_info": {
+          "package_name": "com.example.room_easy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "667338333504-rvv2p7ebhip1jbi9dhb4nu9mi89iauif.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNWs3AgQuGjAs9CsbJp7Wdvqk6HflWxcw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "667338333504-rvv2p7ebhip1jbi9dhb4nu9mi89iauif.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "667338333504-fhb2g7vlutq8f6ra3p4u9hdnjaelp5n1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.roomeasy"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
