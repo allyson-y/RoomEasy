@@ -1,7 +1,11 @@
+import 'dart:async';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/shared/loading.dart';
 import 'package:room_easy/shared/constants.dart';
+import 'package:room_easy/screens/home/survey.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -11,12 +15,15 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
-  final AuthService _auth = AuthService();
+  final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
   String email = "";
   String password = "";
   String error = "";
+  String note = "";
   bool loading = false;
+
+  Timer timer;
   @override
   Widget build(BuildContext context) {
     return loading
@@ -85,7 +92,7 @@ class _RegisterState extends State<Register> {
                           setState(() {
                             loading = true;
                           });
-                          dynamic result = await _auth
+                          dynamic result = await _authService
                               .registerWithEmailAndPassword(email, password);
                           if (result == "invalid-email") {
                             setState(() {
@@ -104,7 +111,10 @@ class _RegisterState extends State<Register> {
                             });
                           } else {
                             //valid registration
-
+                            setState(() {
+                              loading = false;
+                            });
+                            sendVerificationEmail();
                           }
 
                           print(result);
@@ -124,10 +134,35 @@ class _RegisterState extends State<Register> {
                       height: 20,
                     ),
                     Text(error, style: TextStyle(color: Colors.pink)),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Text(note, style: TextStyle(color: Colors.pink)),
                   ],
                 ),
               ),
             ),
           );
+  }
+
+  Future<void> sendVerificationEmail() async {
+    await _authService.auth.currentUser
+        .sendEmailVerification(); //sends verification email
+    setState(() {
+      note = "verification email sent to ${_authService.user}";
+    });
+    timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      checkEmailVerified();
+    });
+  }
+
+  Future<void> checkEmailVerified() async {
+    User user = _authService.auth.currentUser;
+    await user.reload();
+    if (user.emailVerified) {
+      timer.cancel();
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) => Survey()));
+    }
   }
 }

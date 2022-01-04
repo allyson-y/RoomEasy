@@ -8,6 +8,10 @@ class AuthService {
     return _auth.authStateChanges();
   }
 
+  FirebaseAuth get auth {
+    return _auth;
+  }
+
   Future registerWithEmailAndPassword(String email, String password) async {
     try {
       UserCredential userCredential = await _auth
