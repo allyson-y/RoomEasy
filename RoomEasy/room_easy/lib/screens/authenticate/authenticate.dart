@@ -18,11 +18,10 @@ class _AuthenticateState extends State<Authenticate> {
   @override
   Widget build(BuildContext context) {
     if (showSignIn) {
-      print("sign in showd");
+      print("sign in showed");
       return SignIn();
     } else {
       return Register();
     }
-    return Container();
   }
 }

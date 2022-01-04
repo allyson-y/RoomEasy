@@ -8,8 +8,6 @@ import 'package:room_easy/shared/constants.dart';
 import 'package:room_easy/screens/home/survey.dart';
 
 class Register extends StatefulWidget {
-  final Function toggleView;
-  Register({this.toggleView});
   @override
   _RegisterState createState() => _RegisterState();
 }
@@ -33,11 +31,11 @@ class _RegisterState extends State<Register> {
             appBar: AppBar(
               backgroundColor: Colors.brown[400],
               elevation: 0.0,
-              title: Text("sign up for  brew crew"),
+              title: Text("sign up for Room Easy"),
               actions: <Widget>[
                 TextButton.icon(
                     onPressed: () {
-                      widget.toggleView();
+                      //widget.toggleView();
                     },
                     style: TextButton.styleFrom(primary: Colors.black),
                     icon: Icon(Icons.person),

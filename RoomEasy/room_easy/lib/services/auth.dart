@@ -29,4 +29,8 @@ class AuthService {
       return ("Invalid email");
     }
   }
+
+  Future signOut() async {
+    await _auth.signOut();
+  }
 }
