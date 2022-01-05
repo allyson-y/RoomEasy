@@ -9,6 +9,7 @@ import 'package:room_easy/services/auth.dart';
 import 'screens/wrapper.dart';
 import 'screens/authenticate/validate.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'screens/authenticate/preregistration.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // read below
@@ -22,10 +23,10 @@ class RoomEasy extends StatelessWidget {
     return StreamProvider<User>.value(
         value: AuthService().user,
         child: MaterialApp(initialRoute: '/', routes: {
-          '/': (context) => Wrapper(),
-          '/home': (context) => Wrapper(),
-          '/register': (context) => Register(),
-          '/sign_in': (context) => SignIn(),
+          '/': (context) => PreRegistration(),
+          '/home': (context) => PreRegistration(),
+          '/register': (context) => Wrapper(registration: true),
+          '/sign_in': (context) => Wrapper(registration: false),
           '/validate': (context) => Validate(),
         }));
   }

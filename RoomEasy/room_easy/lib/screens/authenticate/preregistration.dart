@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:room_easy/services/auth.dart';
+import 'package:room_easy/screens/wrapper.dart';
 
 class PreRegistration extends StatefulWidget {
   @override
@@ -7,6 +11,7 @@ class PreRegistration extends StatefulWidget {
 }
 
 class _PreRegistrationState extends State<PreRegistration> {
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,6 +41,7 @@ class _PreRegistrationState extends State<PreRegistration> {
           TextButton(
               onPressed: () {
                 Navigator.pushNamed(context, '/sign_in');
+                //return Wrapper(registration: false);
               },
               child: Text('Log in')),
         ],
