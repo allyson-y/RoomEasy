@@ -39,6 +39,9 @@ class _WrapperState extends State<Wrapper> {
         case "sign_in":
           return SignIn();
           break;
+        case "preregistration":
+          return PreRegistration();
+          break;
       }
     } else {
       print(_auth.currentUser.emailVerified);

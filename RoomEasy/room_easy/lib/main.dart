@@ -24,8 +24,8 @@ class RoomEasy extends StatelessWidget {
     return StreamProvider<User>.value(
         value: AuthService().user,
         child: MaterialApp(initialRoute: '/', routes: {
-          '/': (context) => PreRegistration(),
-          '/home': (context) => PreRegistration(),
+          '/': (context) => Wrapper(registration: 'preregistration'),
+          '/home': (context) => Wrapper(registration: "preregistration"),
           '/register': (context) => Wrapper(registration: 'register'),
           '/sign_in': (context) => Wrapper(registration: 'sign_in'),
           '/validate': (context) => Validate(),
