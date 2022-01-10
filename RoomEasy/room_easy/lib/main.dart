@@ -25,8 +25,8 @@ class RoomEasy extends StatelessWidget {
         child: MaterialApp(initialRoute: '/', routes: {
           '/': (context) => PreRegistration(),
           '/home': (context) => PreRegistration(),
-          '/register': (context) => Wrapper(registration: true),
-          '/sign_in': (context) => Wrapper(registration: false),
+          '/register': (context) => Register(),
+          '/sign_in': (context) => SignIn(),
           '/validate': (context) => Validate(),
         }));
   }
