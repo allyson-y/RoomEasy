@@ -44,6 +44,7 @@ class _WrapperState extends State<Wrapper> {
           break;
       }
     } else {
+      //either return survey or home.
       print(_auth.currentUser.emailVerified);
       print("USER IS HEREEE");
       return Survey();

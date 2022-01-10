@@ -110,24 +110,30 @@ class _SignInState extends State<SignIn> {
                   ),
                   ),
                   onPressed: () async {
+                      await _authService.auth.currentUser.reload();
                       dynamic result = await _authService.signInWithEmailAndPassword(email, password);
-                      if (result == "user-not-found" || result == 'invalid-email')
+                      if (_authService.auth.currentUser == null || !_authService.auth.currentUser.emailVerified)
                         {
-                          showAlertDialog(context, "no account found with that email");
+                          showAlertDialog(context, "email not verified");
                         }
-                      else if (result ==  "wrong-password")
-                        {
+                      else {
+                        if (result == "user-not-found" ||
+                            result == 'invalid-email') {
+                          showAlertDialog(
+                              context, "no account found with that email");
+                        }
+                        else if (result == "wrong-password") {
                           print("breh");
                           showAlertDialog(context, "wrong password");
                         }
-                      else{//valid email
+                        else { //valid email
                           setState(() {
-
                             print("valid email");
-                            Navigator.of(context).popUntil((route) => route.isFirst);
+                            Navigator.of(context).popUntil((route) =>
+                            route.isFirst);
                             Navigator.pushReplacementNamed(context, '/survey');
                           });
-
+                        }
                       }
                   },
                   child: Text(
