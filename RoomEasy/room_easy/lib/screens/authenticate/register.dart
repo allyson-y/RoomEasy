@@ -159,7 +159,9 @@ class _RegisterState extends State<Register> {
     await user.reload();
     if (user.emailVerified) {
       timer.cancel();
-      //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Survey()));
+      //https://stackoverflow.com/questions/51484032/flutter-navigation-push-replacement-is-not-working-when-not-placed-in-the-first
+      Navigator.of(context).popUntil((route) => route.isFirst);
+      Navigator.pushReplacementNamed(context, '/survey');
     }
   }
 }

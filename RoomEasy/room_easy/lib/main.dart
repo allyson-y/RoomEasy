@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:room_easy/screens/authenticate/authenticate.dart';
 import 'package:room_easy/screens/authenticate/register.dart';
 import 'package:room_easy/screens/authenticate/sign_in.dart';
+import 'package:room_easy/screens/home/survey.dart';
 import 'package:room_easy/services/auth.dart';
 import 'screens/wrapper.dart';
 import 'screens/authenticate/validate.dart';
@@ -25,9 +26,10 @@ class RoomEasy extends StatelessWidget {
         child: MaterialApp(initialRoute: '/', routes: {
           '/': (context) => PreRegistration(),
           '/home': (context) => PreRegistration(),
-          '/register': (context) => Wrapper(registration: true),
-          '/sign_in': (context) => Wrapper(registration: false),
+          '/register': (context) => Wrapper(registration: 'register'),
+          '/sign_in': (context) => Wrapper(registration: 'sign_in'),
           '/validate': (context) => Validate(),
+          '/survey': (context) => Survey(),
         }));
   }
 }

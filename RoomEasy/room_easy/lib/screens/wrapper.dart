@@ -8,7 +8,7 @@ import 'package:room_easy/screens/home/survey.dart';
 import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/screens/authenticate/register.dart';
 class Wrapper extends StatefulWidget {
-  final bool registration;//true means deals with registration, false means deals with signon
+  final String registration;//true means deals with registration, false means deals with signon
   Wrapper({this.registration});
   @override
   _WrapperState createState() => _WrapperState();
@@ -31,9 +31,15 @@ class _WrapperState extends State<Wrapper> {
 
     if (user == null || !_auth.currentUser.emailVerified){
       print("USER NOT HERE");
-
-      return widget.registration ? Register() : SignIn();
-      return PreRegistration();
+      switch(widget.registration)
+      {
+        case "register":
+          return Register();
+          break;
+        case "sign_in":
+          return SignIn();
+          break;
+      }
     } else {
       print(_auth.currentUser.emailVerified);
       print("USER IS HEREEE");

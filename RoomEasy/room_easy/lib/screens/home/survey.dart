@@ -19,6 +19,7 @@ class _SurveyState extends State<Survey> {
           TextButton.icon(
               onPressed: () async {
                 await _authService.signOut();
+                Navigator.pushReplacementNamed(context, '/');
               },
               style: TextButton.styleFrom(primary: Colors.black),
               icon: Icon(Icons.person),
