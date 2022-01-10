@@ -8,6 +8,7 @@ import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/shared/loading.dart';
 import 'package:room_easy/shared/constants.dart';
 import 'package:room_easy/screens/home/survey.dart';
+import 'package:provider/provider.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -26,16 +27,21 @@ class _SignInState extends State<SignIn> {
   Timer timer;
   @override
   Widget build(BuildContext context) {
-    return loading
-        ? Loading()
-        : Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text("Login Page"),
-      ),
-      body:  Form(
-        key: _formKey,
-        child: Column(
+    final user = Provider.of<User>(context);
+    final _auth = AuthService().auth;
+
+    if (user == null || !_auth.currentUser.emailVerified){
+      print("USER NOT HERE");
+      return loading
+          ? Loading()
+          : Scaffold(
+        backgroundColor: Colors.white,
+        appBar: AppBar(
+          title: Text("Login Page"),
+        ),
+        body:  Form(
+          key: _formKey,
+          child: Column(
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(top: 60.0),
@@ -107,25 +113,26 @@ class _SignInState extends State<SignIn> {
                           width: 2.0,
                         ),
                       ),
-                  ),
+                    ),
                   ),
                   onPressed: () async {
-                      dynamic result = await _authService.signInWithEmailAndPassword(email, password);
-                      if (result == "user-not-found" || result == 'invalid-email')
-                        {
-                          showAlertDialog(context, "no account found with that email");
-                        }
-                      else if (result ==  "wrong-password")
-                        {
-                          print("breh");
-                          showAlertDialog(context, "wrong password");
-                        }
-                      else{//valid email
-                          setState(() {
-                            print("valid email");
-                          });
+                    dynamic result = await _authService.signInWithEmailAndPassword(email, password);
+                    if (result == "user-not-found" || result == 'invalid-email')
+                    {
+                      showAlertDialog(context, "no account found with that email");
+                    }
+                    else if (result ==  "wrong-password")
+                    {
+                      print("breh");
+                      showAlertDialog(context, "wrong password");
+                    }
+                    else{//valid email
+                      setState(() {
+                        print("valid email");
+                        // do something
+                      });
 
-                      }
+                    }
                   },
                   child: Text(
                     'Login',
@@ -133,18 +140,25 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
-                 SizedBox(
-                  height: 130,
-                ),
+              SizedBox(
+                height: 130,
+              ),
               GestureDetector(
-                onTap: (){
-                  print("tapped text");
-                },
+                  onTap: (){
+                    print("tapped text");
+                  },
                   child: Text('New User? Create Account'))
             ],
           ),
-      ),
-    );
+        ),
+      );
+    } else {
+      print(_auth.currentUser.emailVerified);
+      print("USER IS HEREEE");
+      return Survey();
+    }
+
+
   }
 
   Future<void> sendVerificationEmail() async {
