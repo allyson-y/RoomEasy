@@ -13,9 +13,11 @@ class Wrapper extends StatelessWidget {
   Wrapper({this.registration});
   @override
   Widget build(BuildContext context) {
+    
     final user = Provider.of<User>(context);
     final _auth = AuthService().auth;
-    if (user == null || !_auth.currentUser.emailVerified) {
+    //if (user == null || !_auth.currentUser.emailVerified) {
+    if (user == null){
       print("USER NOT HERE");
       return registration ? Register() : SignIn();
     } else {

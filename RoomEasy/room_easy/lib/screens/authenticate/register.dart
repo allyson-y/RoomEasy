@@ -159,8 +159,7 @@ class _RegisterState extends State<Register> {
     await user.reload();
     if (user.emailVerified) {
       timer.cancel();
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Survey()));
+      //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Survey()));
     }
   }
 }
