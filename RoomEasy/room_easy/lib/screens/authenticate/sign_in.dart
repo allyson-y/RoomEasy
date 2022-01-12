@@ -10,6 +10,9 @@ import 'package:room_easy/shared/constants.dart';
 import 'package:room_easy/screens/home/survey.dart';
 
 class SignIn extends StatefulWidget {
+  final Function toggleView;
+  SignIn({ this.toggleView });
+
   @override
   _SignInState createState() => _SignInState();
 }
@@ -23,7 +26,6 @@ class _SignInState extends State<SignIn> {
   String note = "";
   bool loading = false;
 
-  Timer timer;
   @override
   Widget build(BuildContext context) {
     return loading
@@ -110,8 +112,9 @@ class _SignInState extends State<SignIn> {
                   ),
                   ),
                   onPressed: () async {
-                      await _authService.auth.currentUser.reload();
-                      dynamic result = await _authService.signInWithEmailAndPassword(email, password);
+
+                    dynamic result = await _authService.signInWithEmailAndPassword(email, password);
+                    await _authService.auth.currentUser.reload();
                       if (_authService.auth.currentUser == null || !_authService.auth.currentUser.emailVerified)
                         {
                           showAlertDialog(context, "email not verified");
@@ -127,12 +130,13 @@ class _SignInState extends State<SignIn> {
                           showAlertDialog(context, "wrong password");
                         }
                         else { //valid email
-                          setState(() {
+
+                          /*setState(() {
                             print("valid email");
-                            Navigator.of(context).popUntil((route) =>
-                            route.isFirst);
-                            Navigator.pushReplacementNamed(context, '/survey');
-                          });
+                            //Navigator.of(context).popUntil((route) =>
+                            //route.isFirst);
+                            //Navigator.pushReplacementNamed(context, '/survey');
+                          });*/
                         }
                       }
                   },
@@ -142,40 +146,26 @@ class _SignInState extends State<SignIn> {
                   ),
                 ),
               ),
-                 SizedBox(
-                  height: 130,
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: InkWell(onTap: (){
+                    widget.toggleView(2);
+                  },child: Container( width: double.infinity,height: 100,color: Colors.green, child: Text('You can try'),)),
                 ),
-              GestureDetector(
-                onTap: (){
-                  print("tapped text");
-                },
-                  child: Text('New User? Create Account'))
+              ),
+
+
+
             ],
+
           ),
       ),
+
     );
   }
 
-  Future<void> sendVerificationEmail() async {
-    await _authService.auth.currentUser
-        .sendEmailVerification(); //sends verification email
-    setState(() {
-      note = "verification email sent to ${_authService.user}";
-    });
-    timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      checkEmailVerified();
-    });
-  }
 
-  Future<void> checkEmailVerified() async {
-    User user = _authService.auth.currentUser;
-    await user.reload();
-    if (user.emailVerified) {
-      timer.cancel();
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Survey()));
-    }
-  }
 }
 showAlertDialog(BuildContext context, String message) {
 

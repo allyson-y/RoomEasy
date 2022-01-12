@@ -6,6 +6,9 @@ import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/screens/wrapper.dart';
 
 class PreRegistration extends StatefulWidget {
+  final Function toggleView;
+  PreRegistration({ this.toggleView });
+
   @override
   _PreRegistrationState createState() => _PreRegistrationState();
 }
@@ -32,7 +35,7 @@ class _PreRegistrationState extends State<PreRegistration> {
                 backgroundColor: Colors.blue[400],
               ),
               onPressed: () {
-                Navigator.pushNamed(context, '/register');
+                widget.toggleView(2);
               },
               child: Text(
                 'Create new account',
@@ -40,7 +43,8 @@ class _PreRegistrationState extends State<PreRegistration> {
               )),
           TextButton(
               onPressed: () {
-                Navigator.pushNamed(context, '/sign_in');
+                //Navigator.pushNamed(context, '/sign_in');
+                widget.toggleView(1);
                 //return Wrapper(registration: false);
               },
               child: Text('Log in')),

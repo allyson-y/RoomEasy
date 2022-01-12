@@ -6,14 +6,18 @@ import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/shared/loading.dart';
 import 'package:room_easy/shared/constants.dart';
 import 'package:room_easy/screens/home/survey.dart';
+import 'package:provider/provider.dart';
+import 'package:room_easy/services/auth.dart';
 
 class Register extends StatefulWidget {
+  final Function toggleView;
+  Register({ this.toggleView });
+
   @override
   _RegisterState createState() => _RegisterState();
 }
 
 class _RegisterState extends State<Register> {
-  final AuthService _authService = AuthService();
   final _formKey = GlobalKey<FormState>();
   String email = "";
   String password = "";
@@ -24,6 +28,9 @@ class _RegisterState extends State<Register> {
   Timer timer;
   @override
   Widget build(BuildContext context) {
+    final _authService = context.watch<AuthService>();
+
+
     return loading
         ? Loading()
         : Scaffold(
@@ -112,7 +119,11 @@ class _RegisterState extends State<Register> {
                             setState(() {
                               loading = false;
                             });
-                            sendVerificationEmail();
+                            //sendVerificationEmail(_authService);
+                            _authService.sendVerificationEmail();
+                            setState(() {
+                              note = "verification email sent to ${_authService.user}";
+                            });
                           }
 
                           print(result);
@@ -141,27 +152,32 @@ class _RegisterState extends State<Register> {
               ),
             ),
           );
+
+
+
   }
 
-  Future<void> sendVerificationEmail() async {
+  Future<void> sendVerificationEmail(AuthService _authService) async {
     await _authService.auth.currentUser
         .sendEmailVerification(); //sends verification email
     setState(() {
       note = "verification email sent to ${_authService.user}";
     });
     timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      checkEmailVerified();
+      checkEmailVerified(_authService);
     });
   }
 
-  Future<void> checkEmailVerified() async {
+  Future<void> checkEmailVerified(AuthService _authService) async {
     User user = _authService.auth.currentUser;
     await user.reload();
     if (user.emailVerified) {
+
       timer.cancel();
+
       //https://stackoverflow.com/questions/51484032/flutter-navigation-push-replacement-is-not-working-when-not-placed-in-the-first
-      Navigator.of(context).popUntil((route) => route.isFirst);
-      Navigator.pushReplacementNamed(context, '/survey');
+      //Navigator.of(context).popUntil((route) => route.isFirst);
+      //Navigator.pushReplacementNamed(context, '/survey');
     }
   }
 }

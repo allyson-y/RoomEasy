@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'sign_in.dart';
 import 'register.dart';
+import 'preregistration.dart';
 
 class Authenticate extends StatefulWidget {
   @override
@@ -8,20 +9,30 @@ class Authenticate extends StatefulWidget {
 }
 
 class _AuthenticateState extends State<Authenticate> {
-  bool showSignIn = false;
-  void toggleView() {
+  static const int PRE_REGISTRATION = 0;
+  static const int SIGN_IN = 1;
+  static const int REGISTER = 2;
+  int showSignIn = 0;
+  void toggleView(int state) {
     setState(() {
-      showSignIn = !showSignIn;
+      showSignIn = state;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (showSignIn) {
-      print("sign in showed");
-      return SignIn();
-    } else {
-      return Register();
+    switch (showSignIn)
+    {
+      case PRE_REGISTRATION:
+        return PreRegistration(toggleView: toggleView,);
+        break;
+      case (SIGN_IN):
+        return SignIn(toggleView: toggleView,);
+        break;
+      case (REGISTER):
+        return Register(toggleView: toggleView,);
+        break;
     }
+
   }
 }

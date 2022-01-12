@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:room_easy/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:async';
 
-class AuthService {
+class AuthService extends ChangeNotifier{
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  Timer timer;
 
   Stream<User> get user {
     print("user changed state");
@@ -13,6 +15,30 @@ class AuthService {
   FirebaseAuth get auth {
     return _auth;
   }
+
+
+  Future sendVerificationEmail() async {
+    await _auth.currentUser
+        .sendEmailVerification(); //sends verification email
+   timer = Timer.periodic(Duration(seconds: 5), (timer) {
+      checkEmailVerified();
+    });
+  }
+
+  Future checkEmailVerified() async {
+    User user = _auth.currentUser;
+    await user.reload();
+    if (user.emailVerified) {
+
+      timer.cancel();
+      notifyListeners();
+
+      //https://stackoverflow.com/questions/51484032/flutter-navigation-push-replacement-is-not-working-when-not-placed-in-the-first
+      //Navigator.of(context).popUntil((route) => route.isFirst);
+      //Navigator.pushReplacementNamed(context, '/survey');
+    }
+  }
+
 
   Future registerWithEmailAndPassword(String email, String password) async {
     try {

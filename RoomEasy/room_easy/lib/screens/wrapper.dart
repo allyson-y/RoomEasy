@@ -27,11 +27,12 @@ class _WrapperState extends State<Wrapper> {
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
-    final _auth = AuthService().auth;
+    final _auth = context.watch<AuthService>().auth;
 
     if (user == null || !_auth.currentUser.emailVerified){
-      print("USER NOT HERE");
-      switch(widget.registration)
+      print("WRAPPER USER NOT HERE");
+      return Authenticate();
+      /*switch(widget.registration)
       {
         case "register":
           return Register();
@@ -42,11 +43,11 @@ class _WrapperState extends State<Wrapper> {
         case "preregistration":
           return PreRegistration();
           break;
-      }
+      }*/
     } else {
       //either return survey or home.
-      print(_auth.currentUser.emailVerified);
-      print("USER IS HEREEE");
+      //print(_auth.currentUser.emailVerified);
+      print("WRAPPER USER HERE");
       return Survey();
     }
     return Container();
