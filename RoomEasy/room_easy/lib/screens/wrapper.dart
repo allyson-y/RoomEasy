@@ -17,11 +17,13 @@ class Wrapper extends StatefulWidget {
 class _WrapperState extends State<Wrapper> {
   @override
   void initState() {
+    print("STATE INIT");
     // TODO: implement initState
-    super.initState();
     if (AuthService().auth.currentUser != null) {
       AuthService().auth.currentUser.reload();
     }
+
+    super.initState();
 
   }
   @override

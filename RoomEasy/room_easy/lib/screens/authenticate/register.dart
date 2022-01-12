@@ -11,7 +11,8 @@ import 'package:room_easy/services/auth.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
-  Register({ this.toggleView });
+
+  Register({this.toggleView});
 
   @override
   _RegisterState createState() => _RegisterState();
@@ -26,134 +27,168 @@ class _RegisterState extends State<Register> {
   bool loading = false;
 
   Timer timer;
+
   @override
   Widget build(BuildContext context) {
     final _authService = context.watch<AuthService>();
 
-
     return loading
         ? Loading()
-        : Scaffold(
-            backgroundColor: Colors.brown[100],
-            appBar: AppBar(
-              backgroundColor: Colors.brown[400],
-              elevation: 0.0,
-              title: Text("sign up for Room Easy"),
-              actions: <Widget>[
-                TextButton.icon(
-                    onPressed: () {
-                      //widget.toggleView();
-                    },
-                    style: TextButton.styleFrom(primary: Colors.black),
-                    icon: Icon(Icons.person),
-                    label: Text("Sign in"))
-              ],
-            ),
-            body: Container(
-              padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-              child: Form(
+        : WillPopScope(
+          onWillPop: (){
+            widget.toggleView(0);
+          },
+          child: Scaffold(
+              backgroundColor: Colors.white,
+              appBar: AppBar(
+                title: Text("Create an Account"),
+              ),
+              body: Form(
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    SizedBox(
-                      height: 20,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 60.0),
+                      child: Center(
+                        child: Container(
+                            width: 200,
+                            height: 150,
+                            /*decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(50.0)),*/
+                            child: Image.asset('assets/roomEasy.png')),
+                      ),
                     ),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: "Email"),
-                      validator: (val) {
-                        return val.isEmpty ? "Enter email" : null;
-                      },
-                      onChanged: (val) {
-                        setState(() {
+                    Padding(
+                      //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                      padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: TextFormField(
+                        validator: (val) {
+                          return val.isEmpty ? "Enter email" : null;
+                        },
+                        onChanged: (val) {
                           email = val;
-                        });
-                      },
+                        },
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Email',
+                            hintText: 'Enter valid email id as abc@gmail.com'),
+                      ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    TextFormField(
-                      decoration:
-                          textInputDecoration.copyWith(hintText: "Password"),
-                      validator: (val) {
-                        return val.length < 6
-                            ? "Enter at least 6 characters for password"
-                            : null;
-                      },
-                      obscureText: true,
-                      onChanged: (val) {
-                        setState(() {
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 15.0, right: 15.0, top: 15, bottom: 0),
+                      //padding: EdgeInsets.symmetric(horizontal: 15),
+                      child: TextFormField(
+                        onChanged: (val) {
                           password = val;
-                        });
-                      },
+                        },
+                        validator: (val) {
+                          return val.length < 6
+                              ? "Enter at least 6 characters for password"
+                              : null;
+                        },
+                        obscureText: true,
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Password',
+                            hintText: 'Enter secure password'),
+                      ),
                     ),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState.validate()) {
-                          setState(() {
-                            loading = true;
-                          });
-                          dynamic result = await _authService
-                              .registerWithEmailAndPassword(email, password);
-                          if (result == "invalid-email") {
-                            setState(() {
-                              error = "Email invalid";
-                              loading = false;
-                            });
-                          } else if (result == "email-already-in-use") {
-                            setState(() {
-                              loading = false;
-                              error = "Email already in use";
-                            });
-                          } else if (result == "weak-password") {
-                            setState(() {
-                              loading = false;
-                              error = "Password too weak";
-                            });
-                          } else {
-                            //valid registration
-                            setState(() {
-                              loading = false;
-                            });
-                            _authService.sendVerificationEmail();
-                            setState(() {
-                              note = "verification email sent to ${_authService.user}";
-                            });
-                          }
-
-                          print(result);
-                          print(email);
-                          print(password);
-                          print(loading);
-                        } else {}
+                    TextButton(
+                      onPressed: () {
+                        //TODO FORGOT PASSWORD SCREEN GOES HERE
                       },
                       child: Text(
-                        "Register",
-                        style: TextStyle(color: Colors.white),
+                        'Forgot Password',
+                        style: TextStyle(color: Colors.blue, fontSize: 15),
                       ),
-                      style:
-                          ElevatedButton.styleFrom(primary: Colors.pink[400]),
                     ),
-                    SizedBox(
-                      height: 20,
+                    Container(
+                      height: 50,
+                      width: 250,
+                      decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(20)),
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(18.0),
+                              side: BorderSide(
+                                color: Colors.blue,
+                                width: 2.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                        onPressed: () async {
+                          if (_formKey.currentState.validate()) {
+                            setState(() {
+                              loading = true;
+                            });
+                            dynamic result = await _authService
+                                .registerWithEmailAndPassword(email, password);
+                            if (result == "invalid-email") {
+                              setState(() {
+                                error = "Email invalid";
+                                loading = false;
+                              });
+                            } else if (result == "email-already-in-use") {
+                              setState(() {
+                                loading = false;
+                                error = "Email already in use";
+                              });
+                            } else if (result == "weak-password") {
+                              setState(() {
+                                loading = false;
+                                error = "Password too weak";
+                              });
+                            } else {
+                              //valid registration
+                              setState(() {
+                                loading = false;
+                              });
+                              _authService.sendVerificationEmail();
+                              setState(() {
+                                note =
+                                    "verification email sent to ${_authService.user}";
+                              });
+                            }
+
+                            print(result);
+                            print(email);
+                            print(password);
+                            print(loading);
+                          } else {}
+                        },
+                        child: Text(
+                          'Register',
+                          style: TextStyle(color: Colors.white, fontSize: 25),
+                        ),
+                      ),
                     ),
-                    Text(error, style: TextStyle(color: Colors.pink)),
-                    SizedBox(
-                      height: 20,
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: InkWell(
+                            onTap: () {
+                              widget.toggleView(1);
+                            },
+                            child: Container(
+                              width: double.infinity,
+                              height: 100,
+                              color: Colors.green,
+                              child: Text('You can try'),
+                            )),
+                      ),
                     ),
-                    Text(note, style: TextStyle(color: Colors.pink)),
                   ],
                 ),
               ),
             ),
-          );
-
-
-
+        );
   }
 
   Future<void> sendVerificationEmail(AuthService _authService) async {
@@ -171,7 +206,6 @@ class _RegisterState extends State<Register> {
     User user = _authService.auth.currentUser;
     await user.reload();
     if (user.emailVerified) {
-
       timer.cancel();
 
       //https://stackoverflow.com/questions/51484032/flutter-navigation-push-replacement-is-not-working-when-not-placed-in-the-first
