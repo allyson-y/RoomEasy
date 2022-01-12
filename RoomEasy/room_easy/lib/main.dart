@@ -14,7 +14,14 @@ import 'screens/authenticate/preregistration.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // read below
-  await Firebase.initializeApp(); //have to do this to use firebase
+  await Firebase.initializeApp(
+    /*options: FirebaseOptions(//to launch on web
+      apiKey: "AIzaSyCTnzYIoOhiBX_nwsUJYOcvdgQWFZgIMT4", // Your apiKey
+      appId: "1:667338333504:web:6422a7666b275248816ea5", // Your appId
+      messagingSenderId: "667338333504", // Your messagingSenderId
+      projectId: "roomeasy-6caf4", // Your projectId
+    ),*/
+  ); //have to do this to use firebase
   runApp(RoomEasy());
 }
 

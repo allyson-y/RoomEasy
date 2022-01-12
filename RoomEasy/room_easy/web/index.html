@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,5 +42,49 @@
     }
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
+  <script type="module">
+
+  // Import the functions you need from the SDKs you need
+
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-app.js";
+
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.2/firebase-analytics.js";
+
+  // TODO: Add SDKs for Firebase products that you want to use
+
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+
+  // Your web app's Firebase configuration
+
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+  const firebaseConfig = {
+
+    apiKey: "AIzaSyCTnzYIoOhiBX_nwsUJYOcvdgQWFZgIMT4",
+
+    authDomain: "roomeasy-6caf4.firebaseapp.com",
+
+    projectId: "roomeasy-6caf4",
+
+    storageBucket: "roomeasy-6caf4.appspot.com",
+
+    messagingSenderId: "667338333504",
+
+    appId: "1:667338333504:web:6422a7666b275248816ea5",
+
+    measurementId: "G-KH6WKHCR8R"
+
+  };
+
+
+  // Initialize Firebase
+
+  const app = initializeApp(firebaseConfig);
+
+  const analytics = getAnalytics(app);
+
+</script>
+
 </body>
 </html>

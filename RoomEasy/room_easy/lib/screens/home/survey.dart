@@ -7,7 +7,25 @@ class Survey extends StatefulWidget {
 }
 
 class _SurveyState extends State<Survey> {
+  int _selectedIndex = 0; //int that keeps track of which bottom navigation item is selected
   final AuthService _authService = AuthService();
+  static const List<Widget> _widgetOptions = <Widget>[
+    Text(
+      'Index 0: Home',
+    ),
+    Text(
+      'Index 1: Business',
+    ),
+    Text(
+      'Index 2: School',
+    ),
+  ];
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,7 +37,6 @@ class _SurveyState extends State<Survey> {
           TextButton.icon(
               onPressed: () async {
                 await _authService.signOut();
-                Navigator.pushReplacementNamed(context, '/');
               },
               style: TextButton.styleFrom(primary: Colors.black),
               icon: Icon(Icons.person),
