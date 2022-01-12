@@ -27,17 +27,6 @@ class RoomEasy extends StatelessWidget {
     ),
       ChangeNotifierProvider(create: (context) => AuthService()),
     ],child: MaterialApp(home: Wrapper(),),);
-    return StreamProvider<User>.value(
-        value: AuthService().user,
-        child: MaterialApp(initialRoute: '/', routes: {
-          '/': (context) => Wrapper(registration: 'preregistration'),
-          '/home': (context) => Wrapper(registration: "preregistration"),
-          //'/register': (context) => Wrapper(registration: 'register'),
-          '/register': (context) => Register(),
-          '/sign_in': (context) => SignIn(),
-          //'/sign_in': (context) => Wrapper(registration: 'sign_in'),
-          '/validate': (context) => Validate(),
-          '/survey': (context) => Survey(),
-        }));
+
   }
 }

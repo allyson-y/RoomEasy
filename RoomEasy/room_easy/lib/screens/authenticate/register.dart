@@ -119,7 +119,6 @@ class _RegisterState extends State<Register> {
                             setState(() {
                               loading = false;
                             });
-                            //sendVerificationEmail(_authService);
                             _authService.sendVerificationEmail();
                             setState(() {
                               note = "verification email sent to ${_authService.user}";

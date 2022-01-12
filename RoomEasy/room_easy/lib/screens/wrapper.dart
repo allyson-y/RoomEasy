@@ -30,26 +30,12 @@ class _WrapperState extends State<Wrapper> {
     final _auth = context.watch<AuthService>().auth;
 
     if (user == null || !_auth.currentUser.emailVerified){
-      print("WRAPPER USER NOT HERE");
       return Authenticate();
-      /*switch(widget.registration)
-      {
-        case "register":
-          return Register();
-          break;
-        case "sign_in":
-          return SignIn();
-          break;
-        case "preregistration":
-          return PreRegistration();
-          break;
-      }*/
+
     } else {
       //either return survey or home.
       //print(_auth.currentUser.emailVerified);
-      print("WRAPPER USER HERE");
       return Survey();
     }
-    return Container();
   }
 }

@@ -131,12 +131,7 @@ class _SignInState extends State<SignIn> {
                         }
                         else { //valid email
 
-                          /*setState(() {
-                            print("valid email");
-                            //Navigator.of(context).popUntil((route) =>
-                            //route.isFirst);
-                            //Navigator.pushReplacementNamed(context, '/survey');
-                          });*/
+
                         }
                       }
                   },
