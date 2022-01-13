@@ -7,6 +7,7 @@ import 'package:room_easy/screens/authenticate/sign_in.dart';
 import 'package:room_easy/screens/home/survey.dart';
 import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/screens/authenticate/register.dart';
+import 'home/home_screen.dart';
 class Wrapper extends StatefulWidget {
   final String registration;//true means deals with registration, false means deals with signon
   Wrapper({this.registration});
@@ -37,7 +38,7 @@ class _WrapperState extends State<Wrapper> {
     } else {
       //either return survey or home.
       //print(_auth.currentUser.emailVerified);
-      return Survey();
+      return Home();
     }
   }
 }
