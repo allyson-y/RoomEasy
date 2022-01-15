@@ -1,9 +1,12 @@
 
 import 'package:flutter/material.dart';
-import 'package:room_easy/screens/home/messages_screen.dart';
+import 'package:room_easy/models/user.dart';
+import 'chat/messages_screen.dart';
 import 'package:room_easy/screens/home/profile_screen.dart';
 import 'package:room_easy/screens/home/swipe_screen.dart';
 import 'package:room_easy/services/auth.dart';
+import 'package:room_easy/services/database.dart';
+import 'chat/messages_screen.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -22,6 +25,10 @@ class _HomeState extends State<Home> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+  @override
+  initState(){
+    DatabaseService().addUserInfo(RmEasyUser(uid_: _authService.auth.currentUser.uid, name_: _authService.auth.currentUser.email, gender_: "male", grade_: 2, dob_: "12-27-2001"));
   }
 
   @override

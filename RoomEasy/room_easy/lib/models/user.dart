@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
  * Name
  * Gender
  * Date of birth
- *
+ * Matches
  *
  */
 class RmEasyUser {
@@ -18,6 +18,7 @@ class RmEasyUser {
   String gender_;
   int grade_; // 1-4
   var dob_;
-  RmEasyUser({this.uid_, this.name_, this.gender_, this.dob_, this.grade_});
+  List<String> matchList_;
+  RmEasyUser({this.uid_, this.name_, this.gender_, this.dob_, this.grade_, this.matchList_});
 }
 

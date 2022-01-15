@@ -118,11 +118,16 @@ class _SignInState extends State<SignIn> {
                         onPressed: () async {
                           dynamic result = await _authService
                               .signInWithEmailAndPassword(email, password);
-                          await _authService.auth.currentUser.reload();
-                          if (_authService.auth.currentUser == null ||
-                              !_authService.auth.currentUser.emailVerified) {
-                            showAlertDialog(context, "email not verified");
+                          if (_authService.auth.currentUser!=null)
+                            {
+
+                              await _authService.auth.currentUser.reload();
+                              if (_authService.auth.currentUser == null ||
+                                  !_authService.auth.currentUser.emailVerified) {
+                                showAlertDialog(context, "email not verified");
+                            }
                           } else {
+                            print(result);
                             if (result == "user-not-found" ||
                                 result == 'invalid-email') {
                               showAlertDialog(
