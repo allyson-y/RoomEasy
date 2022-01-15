@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:room_easy/models/chat.dart';
+import 'package:room_easy/models/chatProfiles.dart';
 import 'package:room_easy/screens/home/chat/message_list.dart';
 import 'package:room_easy/services/database.dart';
 import 'package:provider/provider.dart';
@@ -8,8 +9,9 @@ import 'package:provider/provider.dart';
 class ChatDetailPage extends StatefulWidget {
   String chatRoomID_;
   String uid_ = FirebaseAuth.instance.currentUser.uid;
+  RmEasyChatProfile chatProfile_;
 
-  ChatDetailPage({this.chatRoomID_});
+  ChatDetailPage({this.chatProfile_,this.chatRoomID_});
 
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
@@ -46,7 +48,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                   ),
                   CircleAvatar(
                     backgroundImage: NetworkImage(
-                        "https://static.wikia.nocookie.net/sml/images/3/35/5FF627B3-ADEB-47ED-BC0E-29908332F74C.webp/revision/latest?cb=20210422030240"),
+widget.chatProfile_.imageURL),
                     maxRadius: 20,
                   ),
                   SizedBox(
@@ -58,7 +60,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "Kriss Benwat",
+                          widget.chatProfile_.name,
                           style: TextStyle(
                               fontSize: 16, fontWeight: FontWeight.w600),
                         ),

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:room_easy/models/chatProfiles.dart';
 import 'package:room_easy/screens/home/chat/chat_detail_screen.dart';
 import 'package:room_easy/shared/helper_functions.dart';
 /**
@@ -27,7 +28,7 @@ class _ProfileCardState extends State<ProfileCard> {
         Navigator.push(context, MaterialPageRoute(
           builder: (context){
             String chatRoomId = HelperFunctions().createChatRoomID(widget.uid_, widget.uidReceiver_);
-            return ChatDetailPage(chatRoomID_: chatRoomId);
+            return ChatDetailPage(chatRoomID_: chatRoomId,chatProfile_: RmEasyChatProfile(name: widget.name,messageText: widget.messageText,imageURL: widget.imageUrl,time: widget.time,uid_: widget.uidReceiver_),);
           }
         ));
         //on tap profile thing
