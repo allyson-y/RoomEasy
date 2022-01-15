@@ -3,9 +3,11 @@
  */
 class RmEasyChat
 {
-    final String sentBy_;
+    final String chatRoomID_;
+    final String sentByUID_;
     final String text_;
-    final DateTime time_sent_;
+    final int ms_since_epoch_;
+    final String time_sent_;
 
-    RmEasyChat({this.sentBy_, this.text_, this.time_sent_});
+    RmEasyChat({this.chatRoomID_,this.sentByUID_, this.text_, this.time_sent_, this.ms_since_epoch_});
 }

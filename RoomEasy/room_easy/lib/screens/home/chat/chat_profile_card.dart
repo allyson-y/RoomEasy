@@ -1,4 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:room_easy/screens/home/chat/chat_detail_screen.dart';
+import 'package:room_easy/shared/helper_functions.dart';
 /**
  * this widget describes the card elements when user swipes to the messages page to see the list of direct messages
  */
@@ -9,7 +12,9 @@ class ProfileCard extends StatefulWidget{
   String imageUrl;
   String time;
   bool isMessageRead;
-  ProfileCard({@required this.name,@required this.messageText,@required this.imageUrl,@required this.time,@required this.isMessageRead});
+  String uid_ = FirebaseAuth.instance.currentUser.uid;
+  String uidReceiver_;
+  ProfileCard({@required this.name,@required this.messageText,@required this.imageUrl,@required this.time,@required this.isMessageRead, this.uidReceiver_});
   @override
   _ProfileCardState createState() => _ProfileCardState();
 }
@@ -19,6 +24,13 @@ class _ProfileCardState extends State<ProfileCard> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
+        Navigator.push(context, MaterialPageRoute(
+          builder: (context){
+            String chatRoomId = HelperFunctions().createChatRoomID(widget.uid_, widget.uidReceiver_);
+            return ChatDetailPage(chatRoomID_: chatRoomId);
+          }
+        ));
+        //on tap profile thing
       },
       child: Container(
         padding: EdgeInsets.only(left: 16,right: 16,top: 10,bottom: 10),

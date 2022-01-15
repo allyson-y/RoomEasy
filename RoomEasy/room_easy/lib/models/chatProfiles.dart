@@ -7,5 +7,6 @@ class RmEasyChatProfile
   String messageText;
   String imageURL;
   String time;
-  RmEasyChatProfile({this.name,this.messageText,this.imageURL,this.time});
+  String uid_;
+  RmEasyChatProfile({this.name,this.messageText,this.imageURL,this.time, this.uid_});
 }
