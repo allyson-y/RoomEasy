@@ -18,11 +18,8 @@ class ChatDetailPage extends StatefulWidget {
 }
 
 class _ChatDetailPageState extends State<ChatDetailPage> {
-  final messageTextController_ = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
-    ScrollController scrollController_ = new ScrollController();
     return StreamProvider<List<RmEasyChat>>.value(
       value: DatabaseService().getChats(widget.chatRoomID_),
       child: Scaffold(
@@ -89,78 +86,6 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
             MessageList(
               chatRoomID_: widget.chatRoomID_,
               uid_: widget.uid_,
-              scrollController_: scrollController_,
-            ),
-            Align(
-              alignment: Alignment.bottomLeft,
-              child: Container(
-                padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
-                height: MediaQuery.of(context).size.height * .1,
-                width: double.infinity,
-                color: Colors.white,
-                child: Row(
-                  children: <Widget>[
-                    GestureDetector(
-                      onTap: () {
-                        //METHOD TO ADD IMAGE GOES HERE
-                      },
-                      child: Container(
-                        height: 30,
-                        width: 30,
-                        decoration: BoxDecoration(
-                          color: Colors.lightBlue,
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Icon(
-                          Icons.add,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    Expanded(
-                      child: TextField(
-                        controller: messageTextController_,
-                        decoration: InputDecoration(
-                            hintText: "Write message...",
-                            hintStyle: TextStyle(color: Colors.black54),
-                            border: InputBorder.none),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 15,
-                    ),
-                    FloatingActionButton(
-                      onPressed: () async {
-                        setState(() {
-                          DateTime dt = DateTime.now();
-                          DatabaseService().addMessage(RmEasyChat(
-                              text_: messageTextController_.text,
-                              sentByUID_: widget.uid_,
-                              chatRoomID_: widget.chatRoomID_,
-                              time_sent_: dt.toString(),
-                              ms_since_epoch_: dt.millisecondsSinceEpoch));
-                        });
-                        scrollController_.animateTo(
-                          scrollController_.position.maxScrollExtent,
-                          curve: Curves.easeOut,
-                          duration: const Duration(milliseconds: 300),
-                        );
-                      },
-                      child: Icon(
-                        Icons.send,
-                        color: Colors.white,
-                        size: 18,
-                      ),
-                      backgroundColor: Colors.blue,
-                      elevation: 0,
-                    ),
-                  ],
-                ),
-              ),
             ),
           ],
         ),
