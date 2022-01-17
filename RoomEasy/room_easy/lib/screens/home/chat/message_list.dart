@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:room_easy/models/chat.dart';
+
 class MessageList extends StatefulWidget {
   String chatRoomID_;
   String uid_;
-
-  MessageList({this.chatRoomID_, this.uid_});
-
+  ScrollController scrollController_;
+  MessageList({this.chatRoomID_, this.uid_, this.scrollController_});
 
   @override
   _MessageListState createState() => _MessageListState();
@@ -19,13 +19,15 @@ class _MessageListState extends State<MessageList> {
     return Stack(
       children: <Widget>[
         ListView.builder(
+          controller: widget.scrollController_,
           itemCount: messages.length,
           shrinkWrap: true,
-          padding: EdgeInsets.only(top: 10, bottom: 10),
+          padding: EdgeInsets.only(
+              top: 10, bottom: MediaQuery.of(context).size.height * .1),
           itemBuilder: (context, index) {
             return Container(
               padding:
-              EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
+                  EdgeInsets.only(left: 14, right: 14, top: 10, bottom: 10),
               child: Align(
                 alignment: (messages[index].sentByUID_ != widget.uid_
                     ? Alignment.topLeft
@@ -47,7 +49,6 @@ class _MessageListState extends State<MessageList> {
             );
           },
         ),
-
       ],
     );
   }

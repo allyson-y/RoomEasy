@@ -1,17 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:room_easy/models/chat.dart';
 import 'package:room_easy/models/chatProfiles.dart';
 import 'package:room_easy/screens/home/chat/message_list.dart';
 import 'package:room_easy/services/database.dart';
-import 'package:provider/provider.dart';
 
 class ChatDetailPage extends StatefulWidget {
   String chatRoomID_;
   String uid_ = FirebaseAuth.instance.currentUser.uid;
   RmEasyChatProfile chatProfile_;
 
-  ChatDetailPage({this.chatProfile_,this.chatRoomID_});
+  ChatDetailPage({this.chatProfile_, this.chatRoomID_});
 
   @override
   _ChatDetailPageState createState() => _ChatDetailPageState();
@@ -22,6 +22,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    ScrollController scrollController_ = new ScrollController();
     return StreamProvider<List<RmEasyChat>>.value(
       value: DatabaseService().getChats(widget.chatRoomID_),
       child: Scaffold(
@@ -47,8 +48,7 @@ class _ChatDetailPageState extends State<ChatDetailPage> {
                     width: 2,
                   ),
                   CircleAvatar(
-                    backgroundImage: NetworkImage(
-widget.chatProfile_.imageURL),
+                    backgroundImage: NetworkImage(widget.chatProfile_.imageURL),
                     maxRadius: 20,
                   ),
                   SizedBox(
@@ -86,12 +86,16 @@ widget.chatProfile_.imageURL),
         ),
         body: Stack(
           children: <Widget>[
-            MessageList(chatRoomID_: widget.chatRoomID_, uid_: widget.uid_,),
+            MessageList(
+              chatRoomID_: widget.chatRoomID_,
+              uid_: widget.uid_,
+              scrollController_: scrollController_,
+            ),
             Align(
               alignment: Alignment.bottomLeft,
               child: Container(
                 padding: EdgeInsets.only(left: 10, bottom: 10, top: 10),
-                height: 60,
+                height: MediaQuery.of(context).size.height * .1,
                 width: double.infinity,
                 color: Colors.white,
                 child: Row(
@@ -140,6 +144,11 @@ widget.chatProfile_.imageURL),
                               time_sent_: dt.toString(),
                               ms_since_epoch_: dt.millisecondsSinceEpoch));
                         });
+                        scrollController_.animateTo(
+                          scrollController_.position.maxScrollExtent,
+                          curve: Curves.easeOut,
+                          duration: const Duration(milliseconds: 300),
+                        );
                       },
                       child: Icon(
                         Icons.send,
