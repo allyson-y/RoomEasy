@@ -17,8 +17,15 @@ class RmEasyUser {
   String name_;
   String gender_;
   int grade_; // 1-4
+  bool surveyComplete_;
   var dob_;
   List<String> matchList_;
-  RmEasyUser({this.uid_, this.name_, this.gender_, this.dob_, this.grade_, this.matchList_});
+  RmEasyUser(
+      {this.uid_,
+      this.name_,
+      this.gender_,
+      this.dob_,
+      this.grade_,
+      this.matchList_,
+      this.surveyComplete_});
 }
-

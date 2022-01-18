@@ -6,7 +6,7 @@ import 'package:room_easy/models/chatProfiles.dart';
 import 'package:room_easy/screens/authenticate/authenticate.dart';
 import 'package:room_easy/screens/authenticate/register.dart';
 import 'package:room_easy/screens/authenticate/sign_in.dart';
-import 'package:room_easy/screens/home/survey.dart';
+import 'package:room_easy/screens/survey/survey.dart';
 import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/services/database.dart';
 import 'screens/wrapper.dart';
@@ -39,9 +39,7 @@ class RoomEasy extends StatelessWidget {
         StreamProvider<List<RmEasyChatProfile>>.value(
           value: DatabaseService().chatProfiles,
         ),
-
       ],
-
       child: MaterialApp(
         home: Wrapper(),
       ),

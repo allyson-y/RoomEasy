@@ -4,12 +4,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:room_easy/screens/authenticate/authenticate.dart';
 import 'package:room_easy/screens/authenticate/preregistration.dart';
 import 'package:room_easy/screens/authenticate/sign_in.dart';
-import 'package:room_easy/screens/home/survey.dart';
+import 'package:room_easy/screens/survey/survey.dart';
 import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/screens/authenticate/register.dart';
+import 'package:room_easy/services/database.dart';
 import 'home/home_screen.dart';
+
 class Wrapper extends StatefulWidget {
-  final String registration;//true means deals with registration, false means deals with signon
+  final String
+      registration; //true means deals with registration, false means deals with signon
   Wrapper({this.registration});
   @override
   _WrapperState createState() => _WrapperState();
@@ -25,17 +28,17 @@ class _WrapperState extends State<Wrapper> {
     }
 
     super.initState();
-
   }
+
   @override
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final _auth = context.watch<AuthService>().auth;
 
-    if (user == null || !_auth.currentUser.emailVerified){
+    if (user == null || !_auth.currentUser.emailVerified) {
       return Authenticate();
-
     } else {
+      DatabaseService
       //either return survey or home.
       //print(_auth.currentUser.emailVerified);
       return Home();

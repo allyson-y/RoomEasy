@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/shared/loading.dart';
 import 'package:room_easy/shared/constants.dart';
-import 'package:room_easy/screens/home/survey.dart';
+import 'package:room_easy/screens/survey/survey.dart';
 
 class SignIn extends StatefulWidget {
   final Function toggleView;
@@ -32,10 +32,10 @@ class _SignInState extends State<SignIn> {
     return loading
         ? Loading()
         : WillPopScope(
-          onWillPop: (){
-            widget.toggleView(0);
-          },
-          child: Scaffold(
+            onWillPop: () {
+              widget.toggleView(0);
+            },
+            child: Scaffold(
               backgroundColor: Colors.white,
               appBar: AppBar(
                 title: Text("Login Page"),
@@ -118,13 +118,11 @@ class _SignInState extends State<SignIn> {
                         onPressed: () async {
                           dynamic result = await _authService
                               .signInWithEmailAndPassword(email, password);
-                          if (_authService.auth.currentUser!=null)
-                            {
-
-                              await _authService.auth.currentUser.reload();
-                              if (_authService.auth.currentUser == null ||
-                                  !_authService.auth.currentUser.emailVerified) {
-                                showAlertDialog(context, "email not verified");
+                          if (_authService.auth.currentUser != null) {
+                            await _authService.auth.currentUser.reload();
+                            if (_authService.auth.currentUser == null ||
+                                !_authService.auth.currentUser.emailVerified) {
+                              showAlertDialog(context, "email not verified");
                             }
                           } else {
                             print(result);
@@ -166,7 +164,7 @@ class _SignInState extends State<SignIn> {
                 ),
               ),
             ),
-        );
+          );
   }
 }
 

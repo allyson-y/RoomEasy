@@ -1,43 +1,62 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:room_easy/models/user.dart';
-import 'package:room_easy/models/chatProfiles.dart';
 import 'package:room_easy/models/chat.dart';
+import 'package:room_easy/models/chatProfiles.dart';
+import 'package:room_easy/models/user.dart';
 
 class DatabaseService {
   final CollectionReference userCollection =
-      FirebaseFirestore.instance.collection('users');
+  FirebaseFirestore.instance.collection('users');
 
-  final CollectionReference chatCollection = FirebaseFirestore.instance.collection('chatrooms');
+  final CollectionReference chatCollection =
+  FirebaseFirestore.instance.collection('chatrooms');
 
   Future<void> addUserInfo(RmEasyUser user) async {
     return userCollection
         .doc(user.uid_)
         .set({
-          'name': user.name_,
-          'grade': user.grade_,
-          'gender': user.gender_,
-          'matches': user.matchList_,
-          'uid': user.uid_,
-        })
+      'name': user.name_,
+      'grade': user.grade_,
+      'gender': user.gender_,
+      'matches': user.matchList_,
+      'uid': user.uid_,
+      'surveyComplete': user.surveyComplete_,
+    })
         .then((value) => print("User ${user.name_} added!"))
         .catchError((error) =>
-            print("Failed to add user ${user.name_} due to error $error"));
+        print("Failed to add user ${user.name_} due to error $error"));
   }
+
+  RmEasyUser _userFromSnapshot(DocumentSnapshot snapshot, String uid) {
+    return RmEasyUser(name_: snapshot.get('name'),
+        uid_: uid,
+        grade_: snapshot.get('grade'),
+        gender_: snapshot.get('gender'),
+        matchList_: snapshot.get('matches'),
+        surveyComplete_: snapshot.get('surveyComplete'));
+  }
+
+  Stream<RmEasyUser> getUserInfo(String uid) {
+    return userCollection.doc('uid').snapshots().map((event) => null)
+  }
+
   /*Future<void> addChatRoomInfo(RmEasyChatRoom room) async{
     return chatCollection.doc(room.chatRoomID_).set({
 
     })
   }*/
-  Future<void> addMessage(RmEasyChat chat) async{
+  Future<void> addMessage(RmEasyChat chat) async {
     return chatCollection.doc(chat.chatRoomID_).collection('chats').add({
-        'sentByUID': chat.sentByUID_,
-        'text': chat.text_,
-        'time_sent': chat.time_sent_,
-        'ms_since_epoch': chat.ms_since_epoch_,
-    }).catchError((error) => print("failed to send message ${chat.text_} due to error $error"));
+      'sentByUID': chat.sentByUID_,
+      'text': chat.text_,
+      'time_sent': chat.time_sent_,
+      'ms_since_epoch': chat.ms_since_epoch_,
+    }).catchError((error) =>
+        print("failed to send message ${chat.text_} due to error $error"));
   }
-  List<RmEasyChat> _chatFromSnapshot(QuerySnapshot snapshot, String chatRoomID){
-    return snapshot.docs.map((doc){
+
+  List<RmEasyChat> _chatFromSnapshot(QuerySnapshot snapshot,
+      String chatRoomID) {
+    return snapshot.docs.map((doc) {
       return RmEasyChat(
         chatRoomID_: chatRoomID,
         sentByUID_: doc.get('sentByUID'),
@@ -47,9 +66,15 @@ class DatabaseService {
       );
     }).toList();
   }
-  Stream<List<RmEasyChat>> getChats(String chatRoomID)
-  {
-    return chatCollection.doc(chatRoomID).collection('chats').orderBy('ms_since_epoch').snapshots().map((QuerySnapshot snapshot) => _chatFromSnapshot(snapshot, chatRoomID));
+
+  Stream<List<RmEasyChat>> getChats(String chatRoomID) {
+    return chatCollection
+        .doc(chatRoomID)
+        .collection('chats')
+        .orderBy('ms_since_epoch')
+        .snapshots()
+        .map((QuerySnapshot snapshot) =>
+        _chatFromSnapshot(snapshot, chatRoomID));
   }
 
   List<RmEasyChatProfile> _chatProfilesFromSnapshot(QuerySnapshot snapshot) {
@@ -62,7 +87,7 @@ class DatabaseService {
         messageText: "PLACEMENT TEXT IN CLASS DATABASE",
         time: "PLACEMENT TIME",
         imageURL:
-            "https://static.wikia.nocookie.net/sml/images/3/35/5FF627B3-ADEB-47ED-BC0E-29908332F74C.webp/revision/latest?cb=20210422030240",
+        "https://static.wikia.nocookie.net/sml/images/3/35/5FF627B3-ADEB-47ED-BC0E-29908332F74C.webp/revision/latest?cb=20210422030240",
         uid_: doc.get('uid'),
       );
     }).toList();

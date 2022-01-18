@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/shared/loading.dart';
 import 'package:room_easy/shared/constants.dart';
-import 'package:room_easy/screens/home/survey.dart';
+import 'package:room_easy/screens/survey/survey.dart';
 import 'package:provider/provider.dart';
 import 'package:room_easy/services/auth.dart';
 
@@ -35,10 +35,10 @@ class _RegisterState extends State<Register> {
     return loading
         ? Loading()
         : WillPopScope(
-          onWillPop: (){
-            widget.toggleView(0);
-          },
-          child: Scaffold(
+            onWillPop: () {
+              widget.toggleView(0);
+            },
+            child: Scaffold(
               backgroundColor: Colors.white,
               appBar: AppBar(
                 title: Text("Create an Account"),
@@ -188,7 +188,7 @@ class _RegisterState extends State<Register> {
                 ),
               ),
             ),
-        );
+          );
   }
 
   Future<void> sendVerificationEmail(AuthService _authService) async {

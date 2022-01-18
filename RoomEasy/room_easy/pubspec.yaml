@@ -34,6 +34,7 @@ dependencies:
   flutter_spinkit: ^5.1.0
   firebase_storage: ^10.2.4
   google_sign_in: ^5.1.0
+  introduction_screen: ^2.1.0
 
 dev_dependencies:
   flutter_test:
