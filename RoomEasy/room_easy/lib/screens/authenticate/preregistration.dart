@@ -18,38 +18,70 @@ class _PreRegistrationState extends State<PreRegistration> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          new Image.asset(
-            'assets/roomEasy.png',
-            width: 200.0,
-          ),
-          SizedBox(
-            height: 60.0,
-          ),
-          TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.blue[400],
+        decoration: new BoxDecoration(color: Colors.white),
+
+        padding: EdgeInsets.symmetric(horizontal: 16.0),
+        child:
+
+        Flexible(
+          child:
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(height: 30),
+              Align(
+                alignment: Alignment.topRight,
+                child: RawMaterialButton(
+                  onPressed: () {},
+                  elevation: 1.0,
+                  fillColor: Colors.white,
+                  child: Text(
+                    '?',
+                    style: TextStyle(color: Colors.black,fontSize: 25, fontWeight: FontWeight.bold),
+                  ),
+                  padding: EdgeInsets.all(10.0),
+                  shape: CircleBorder(
+                    side: BorderSide(width: 2, color: Colors.black, style: BorderStyle.solid),
+                  ),
+                ),
+
               ),
-              onPressed: () {
-                widget.toggleView(2);
-              },
-              child: Text(
-                'Create new account',
-                style: TextStyle(color: Colors.white),
-              )),
-          TextButton(
-              onPressed: () {
-                //Navigator.pushNamed(context, '/sign_in');
-                widget.toggleView(1);
-                //return Wrapper(registration: false);
-              },
-              child: Text('Log in')),
-        ],
-      ),
+              SizedBox(height: 120),
+              new Image.asset(
+                'assets/roomEasy.png',
+                width: 200.0,
+              ),
+              SizedBox(
+                height: 60.0,
+              ),
+              TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.blue[400],
+                  ),
+                  onPressed: () {
+                    //Navigator.pushNamed(context, '/sign_in');
+                    // widget.toggleView(1);
+                    //return Wrapper(registration: false);
+                  },
+                  child: Text(
+                    'Log In',
+                    style: TextStyle(color: Colors.white),
+                  )),
+              TextButton(
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.blue[400],
+                  ),
+                  onPressed: () {
+                    //widget.toggleView(2);
+                  },
+                  child: Text('Sign Up',
+                    style: TextStyle(color: Colors.white),))
+              ,
+
+            ],
+          ),
+        )
     );
   }
 }
