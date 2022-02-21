@@ -13,6 +13,7 @@ import 'screens/wrapper.dart';
 import 'screens/authenticate/validate.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/authenticate/preregistration.dart';
+import 'models/user.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // read below

@@ -1,8 +1,10 @@
 import 'dart:async';
+import 'package:room_easy/models/user.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:room_easy/services/auth.dart';
+import 'package:room_easy/services/database.dart';
 import 'package:room_easy/shared/loading.dart';
 import 'package:room_easy/shared/constants.dart';
 import 'package:room_easy/screens/survey/survey.dart';
@@ -150,6 +152,15 @@ class _RegisterState extends State<Register> {
                               setState(() {
                                 loading = false;
                               });
+                              print(
+                                  "CURRENT USER: ${_authService.auth.currentUser}");
+                              await DatabaseService().addUserInfo(RmEasyUser(
+                                  uid_: _authService.auth.currentUser.uid,
+                                  name_: _authService.auth.currentUser.uid,
+                                  gender_: "",
+                                  grade_: 2,
+                                  dob_: "12-27-2001",
+                                  surveyComplete_: false));
                               _authService.sendVerificationEmail();
                               setState(() {
                                 note =
@@ -204,6 +215,7 @@ class _RegisterState extends State<Register> {
 
   Future<void> checkEmailVerified(AuthService _authService) async {
     User user = _authService.auth.currentUser;
+
     await user.reload();
     if (user.emailVerified) {
       timer.cancel();

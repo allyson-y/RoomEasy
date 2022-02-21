@@ -5,38 +5,41 @@ import 'package:room_easy/models/user.dart';
 
 class DatabaseService {
   final CollectionReference userCollection =
-  FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
 
   final CollectionReference chatCollection =
-  FirebaseFirestore.instance.collection('chatrooms');
+      FirebaseFirestore.instance.collection('chatrooms');
 
   Future<void> addUserInfo(RmEasyUser user) async {
+    print("USER IS BEING ADDED ");
     return userCollection
         .doc(user.uid_)
         .set({
-      'name': user.name_,
-      'grade': user.grade_,
-      'gender': user.gender_,
-      'matches': user.matchList_,
-      'uid': user.uid_,
-      'surveyComplete': user.surveyComplete_,
-    })
+          'name': user.name_,
+          'grade': user.grade_,
+          'gender': user.gender_,
+          'matches': user.matchList_,
+          'uid': user.uid_,
+          'surveyComplete': user.surveyComplete_,
+        })
         .then((value) => print("User ${user.name_} added!"))
         .catchError((error) =>
-        print("Failed to add user ${user.name_} due to error $error"));
+            print("Failed to add user ${user.name_} due to error $error"));
   }
 
-  RmEasyUser _userFromSnapshot(DocumentSnapshot snapshot, String uid) {
-    return RmEasyUser(name_: snapshot.get('name'),
-        uid_: uid,
+  RmEasyUser _userFromSnapshot(DocumentSnapshot snapshot) {
+    return RmEasyUser(
+        name_: snapshot.get('name'),
+        uid_: snapshot.get('uid'),
         grade_: snapshot.get('grade'),
         gender_: snapshot.get('gender'),
         matchList_: snapshot.get('matches'),
         surveyComplete_: snapshot.get('surveyComplete'));
   }
 
+  //stream that returns user whenever changed
   Stream<RmEasyUser> getUserInfo(String uid) {
-    return userCollection.doc('uid').snapshots().map((event) => null)
+    return userCollection.doc(uid).snapshots().map(_userFromSnapshot);
   }
 
   /*Future<void> addChatRoomInfo(RmEasyChatRoom room) async{
@@ -54,8 +57,8 @@ class DatabaseService {
         print("failed to send message ${chat.text_} due to error $error"));
   }
 
-  List<RmEasyChat> _chatFromSnapshot(QuerySnapshot snapshot,
-      String chatRoomID) {
+  List<RmEasyChat> _chatFromSnapshot(
+      QuerySnapshot snapshot, String chatRoomID) {
     return snapshot.docs.map((doc) {
       return RmEasyChat(
         chatRoomID_: chatRoomID,
@@ -74,7 +77,7 @@ class DatabaseService {
         .orderBy('ms_since_epoch')
         .snapshots()
         .map((QuerySnapshot snapshot) =>
-        _chatFromSnapshot(snapshot, chatRoomID));
+            _chatFromSnapshot(snapshot, chatRoomID));
   }
 
   List<RmEasyChatProfile> _chatProfilesFromSnapshot(QuerySnapshot snapshot) {
@@ -87,7 +90,7 @@ class DatabaseService {
         messageText: "PLACEMENT TEXT IN CLASS DATABASE",
         time: "PLACEMENT TIME",
         imageURL:
-        "https://static.wikia.nocookie.net/sml/images/3/35/5FF627B3-ADEB-47ED-BC0E-29908332F74C.webp/revision/latest?cb=20210422030240",
+            "https://static.wikia.nocookie.net/sml/images/3/35/5FF627B3-ADEB-47ED-BC0E-29908332F74C.webp/revision/latest?cb=20210422030240",
         uid_: doc.get('uid'),
       );
     }).toList();
