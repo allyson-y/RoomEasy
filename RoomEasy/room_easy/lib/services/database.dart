@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:room_easy/models/chat.dart';
 import 'package:room_easy/models/chatProfiles.dart';
 import 'package:room_easy/models/user.dart';
@@ -27,6 +28,20 @@ class DatabaseService {
             print("Failed to add user ${user.name_} due to error $error"));
   }
 
+  Future<void> updateUserSurveyCompley(String uid_) async {
+    return userCollection
+        .doc(uid_)
+        .update({
+          'surveyComplete': true,
+        })
+        .then((value) => print("$uid_ survey complete"))
+        .catchError((error) => print(
+            "Failed to add user $uid_ survey not complete due to error $error"))
+        .whenComplete(() {
+          print("DONE UPDATED");
+        });
+  }
+
   RmEasyUser _userFromSnapshot(DocumentSnapshot snapshot) {
     return RmEasyUser(
         name_: snapshot.get('name'),
@@ -38,8 +53,17 @@ class DatabaseService {
   }
 
   //stream that returns user whenever changed
-  Stream<RmEasyUser> getUserInfo(String uid) {
+  Stream<RmEasyUser> getUserStream(String uid) {
     return userCollection.doc(uid).snapshots().map(_userFromSnapshot);
+  }
+
+  /**
+   * non stream user data access is below
+   */
+  Future<RmEasyUser> getUserSnapshot(String uid) {
+    return userCollection.doc(uid).get().then((DocumentSnapshot snapshot) {
+      return _userFromSnapshot(snapshot);
+    });
   }
 
   /*Future<void> addChatRoomInfo(RmEasyChatRoom room) async{

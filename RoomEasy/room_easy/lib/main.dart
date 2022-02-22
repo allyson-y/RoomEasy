@@ -14,11 +14,13 @@ import 'screens/authenticate/validate.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/authenticate/preregistration.dart';
 import 'models/user.dart';
+import 'screens/survey/survey.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); // read below
   await Firebase.initializeApp(
-      /*options: FirebaseOptions(//to launch on web
+      /* options: FirebaseOptions(
+      //to launch on web
       apiKey: "AIzaSyCTnzYIoOhiBX_nwsUJYOcvdgQWFZgIMT4", // Your apiKey
       appId: "1:667338333504:web:6422a7666b275248816ea5", // Your appId
       messagingSenderId: "667338333504", // Your messagingSenderId
@@ -37,6 +39,7 @@ class RoomEasy extends StatelessWidget {
           value: AuthService().user,
         ),
         ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => Survey()),
         StreamProvider<List<RmEasyChatProfile>>.value(
           value: DatabaseService().chatProfiles,
         ),

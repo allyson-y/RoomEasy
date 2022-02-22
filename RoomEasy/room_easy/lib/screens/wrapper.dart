@@ -42,6 +42,7 @@ class _WrapperState extends State<Wrapper> {
       return Authenticate();
     } else {
       return FutureBuilder(
+          // we use a futurebuilder here since the user data only comes in a future<rmeasyuser> and the build method isn't asynchronous.
           future: DatabaseService().getUserSnapshot(user.uid),
           builder: (BuildContext context, AsyncSnapshot<RmEasyUser> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {

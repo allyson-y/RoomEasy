@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:room_easy/models/user.dart';
+import 'package:room_easy/services/auth.dart';
+import 'package:room_easy/services/database.dart';
 import 'package:room_easy/shared/helper_functions.dart';
 
-class Survey extends StatefulWidget {
+class Survey extends StatefulWidget with ChangeNotifier {
   @override
   _SurveyState createState() => _SurveyState();
 }
@@ -31,8 +34,12 @@ class _SurveyState extends State<Survey> {
     return Scaffold(
       appBar: AppBar(),
       body: IntroductionScreen(
-        onDone: () {
+        onDone: () async {
           // When done button is press
+          await DatabaseService()
+              .updateUserSurveyCompley(AuthService().auth.currentUser.uid);
+          print("DONEEEE");
+          widget.notifyListeners();
         },
         skip: const Text("Skip"),
         done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
