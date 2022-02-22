@@ -35,26 +35,21 @@ class _WrapperState extends State<Wrapper> {
   Widget build(BuildContext context) {
     final user = Provider.of<User>(context);
     final _auth = context.watch<AuthService>().auth;
+    final SurveyScreen = Provider.of<Survey>(context);
+    print("REBUILT");
 
     if (user == null || !_auth.currentUser.emailVerified) {
       return Authenticate();
     } else {
-      print("this is user: $user");
-      return StreamBuilder<RmEasyUser>(
-        stream: DatabaseService().getUserInfo(user.uid),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return snapshot.data.surveyComplete_ ? Home() : Survey();
-          } else {
-            return SpinKitChasingDots(
-              color: Colors.blue,
-              size: 50,
-            );
-          }
-
-          print(snapshot.data);
-        },
-      );
+      return FutureBuilder(
+          future: DatabaseService().getUserSnapshot(user.uid),
+          builder: (BuildContext context, AsyncSnapshot<RmEasyUser> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              print(snapshot.data.uid_);
+              return snapshot.data.surveyComplete_ ? Home() : SurveyScreen;
+            }
+            return SpinKitChasingDots(color: Colors.teal, size: 50);
+          });
     }
   }
 }
