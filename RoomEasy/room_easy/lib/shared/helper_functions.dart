@@ -1,3 +1,7 @@
+import 'package:flutter/cupertino.dart';
+import 'package:room_easy/models/user.dart';
+import 'package:room_easy/screens/home/swipe/swipe_card.dart';
+
 class HelperFunctions {
   String createChatRoomID(String uid_1, String uid_2) {
     if (uid_1.compareTo(uid_2) > 0) {
@@ -20,5 +24,15 @@ class HelperFunctions {
       x += sleepTime.toString() + "PM";
     }
     return x;
+  }
+
+  /**
+   * converts List<RmEasyUser> into the corresponding List<SwipeCard>
+   * important part of swipe_screen.dart
+   */
+  List<Widget> mapRmEasyUserToWidget(List<RmEasyUser> userList) {
+    return userList.map((user) {
+      return SwipeCard(user.name_);
+    }).toList();
   }
 }

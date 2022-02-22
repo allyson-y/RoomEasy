@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:room_easy/models/user.dart';
-import 'chat/messages_screen.dart';
+import 'messages_screen.dart';
 import 'package:room_easy/screens/home/profile_screen.dart';
 import 'package:room_easy/screens/home/swipe_screen.dart';
 import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/services/database.dart';
-import 'chat/messages_screen.dart';
+import 'messages_screen.dart';
 
 class Home extends StatefulWidget {
   @override

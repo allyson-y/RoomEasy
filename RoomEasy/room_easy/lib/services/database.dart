@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:room_easy/models/chat.dart';
 import 'package:room_easy/models/chatProfiles.dart';
 import 'package:room_easy/models/user.dart';
@@ -12,7 +11,7 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('chatrooms');
 
   Future<void> addUserInfo(RmEasyUser user) async {
-    print("USER IS BEING ADDED ");
+    //print("USER IS BEING ADDED ");
     return userCollection
         .doc(user.uid_)
         .set({
@@ -53,6 +52,7 @@ class DatabaseService {
   }
 
   //stream that returns user whenever changed
+  //NOTE: when would we need this?
   Stream<RmEasyUser> getUserStream(String uid) {
     return userCollection.doc(uid).snapshots().map(_userFromSnapshot);
   }
@@ -105,10 +105,10 @@ class DatabaseService {
   }
 
   List<RmEasyChatProfile> _chatProfilesFromSnapshot(QuerySnapshot snapshot) {
-    print("translator method claled");
-    print(snapshot.docs.first.get('name'));
+    //print("translator method claled");
+    //print(snapshot.docs.first.get('name'));
     return snapshot.docs.map((doc) {
-      print("hello");
+      //print("hello");
       return RmEasyChatProfile(
         name: doc.get('name'),
         messageText: "PLACEMENT TEXT IN CLASS DATABASE",
@@ -120,8 +120,26 @@ class DatabaseService {
     }).toList();
   }
 
+  List<RmEasyUser> _rmEasyUsersFromSnapshot(QuerySnapshot snapshot) {
+    //print("translator method claled");
+    //print(snapshot.docs.first.get('name'));
+    return snapshot.docs.map((doc) {
+      //print("hello");
+      print(doc.data());
+      return RmEasyUser(
+        uid_: doc.get('uid'),
+        name_: doc.get('name'),
+      );
+      //return _userFromSnapshot(doc);
+    }).toList();
+  }
+
   Stream<List<RmEasyChatProfile>> get chatProfiles {
     print("chatprofiles called");
     return userCollection.snapshots().map(_chatProfilesFromSnapshot);
+  }
+
+  Stream<List<RmEasyUser>> get allUsers {
+    return userCollection.snapshots().map(_rmEasyUsersFromSnapshot);
   }
 }

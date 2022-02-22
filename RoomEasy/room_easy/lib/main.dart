@@ -43,6 +43,11 @@ class RoomEasy extends StatelessWidget {
         StreamProvider<List<RmEasyChatProfile>>.value(
           value: DatabaseService().chatProfiles,
         ),
+
+        //this is the provider to deal with user adds/preference updates?
+        //NOTE: used in swipescreen extensively.
+        StreamProvider<List<RmEasyUser>>.value(
+            value: DatabaseService().allUsers)
       ],
       child: MaterialApp(
         home: Wrapper(),
