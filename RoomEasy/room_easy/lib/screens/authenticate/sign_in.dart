@@ -36,6 +36,7 @@ class _SignInState extends State<SignIn> {
               widget.toggleView(0);
             },
             child: Scaffold(
+              resizeToAvoidBottomInset: false,
               backgroundColor: Colors.white,
               appBar: AppBar(
                 title: Text("Login Page"),

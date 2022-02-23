@@ -41,6 +41,7 @@ class _RegisterState extends State<Register> {
               widget.toggleView(0);
             },
             child: Scaffold(
+              resizeToAvoidBottomInset: false,
               backgroundColor: Colors.white,
               appBar: AppBar(
                 title: Text("Create an Account"),
@@ -159,13 +160,13 @@ class _RegisterState extends State<Register> {
                                   "CURRENT USER: ${_authService.auth.currentUser}");
 
                               await _authService.sendVerificationEmail();
-                              /*await DatabaseService().addUserInfo(RmEasyUser(
+                              await DatabaseService().addUserInfo(RmEasyUser(
                                   uid_: _authService.auth.currentUser.uid,
                                   name_: _authService.auth.currentUser.uid,
                                   gender_: "",
                                   grade_: 2,
                                   dob_: "12-27-2001",
-                                  surveyComplete_: false));*/
+                                  surveyComplete_: false));
                               setState(() {
                                 note =
                                     "verification email sent to ${_authService.user}";
@@ -193,7 +194,7 @@ class _RegisterState extends State<Register> {
                             },
                             child: Container(
                               width: double.infinity,
-                              height: 100,
+                              height: 50,
                               color: Colors.green,
                               child: Text('You can try'),
                             )),
