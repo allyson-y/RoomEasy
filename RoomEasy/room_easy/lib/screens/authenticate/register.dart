@@ -152,6 +152,10 @@ class _RegisterState extends State<Register> {
                               setState(() {
                                 loading = false;
                               });
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => _buildPopupDialog(context),
+                              );
                               print(
                                   "CURRENT USER: ${_authService.auth.currentUser}");
                               await DatabaseService().addUserInfo(RmEasyUser(
@@ -225,4 +229,26 @@ class _RegisterState extends State<Register> {
       //Navigator.pushReplacementNamed(context, '/survey');
     }
   }
+}
+
+Widget _buildPopupDialog(BuildContext context) {
+  return new AlertDialog(
+    title: const Text('Terms and Conditions'),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text("This is where the terms and conditions will go."),
+      ],
+    ),
+    actions: <Widget>[
+      new FlatButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        textColor: Theme.of(context).primaryColor,
+        child: const Text('Accept'),
+      ),
+    ],
+  );
 }
