@@ -238,7 +238,7 @@ Widget _buildPopupDialog(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text("This is where the terms and conditions will go"),
+        Text("This is where the terms and conditions will go."),
       ],
     ),
     actions: <Widget>[
