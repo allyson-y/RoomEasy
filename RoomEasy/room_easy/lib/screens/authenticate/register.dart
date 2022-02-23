@@ -41,6 +41,7 @@ class _RegisterState extends State<Register> {
               widget.toggleView(0);
             },
             child: Scaffold(
+              resizeToAvoidBottomInset: false,
               backgroundColor: Colors.white,
               appBar: AppBar(
                 title: Text("Create an Account"),
@@ -130,8 +131,11 @@ class _RegisterState extends State<Register> {
                             setState(() {
                               loading = true;
                             });
-                            dynamic result = await _authService
-                                .registerWithEmailAndPassword(email, password);
+                            email = email.trim();
+                            dynamic result =
+                                await _authService.registerWithEmailAndPassword(
+                                    email,
+                                    password); //NOTE: without trim it gives a email badly formatted bug when you enter email with space
                             if (result == "invalid-email") {
                               setState(() {
                                 error = "Email invalid";
@@ -158,6 +162,8 @@ class _RegisterState extends State<Register> {
                               );
                               print(
                                   "CURRENT USER: ${_authService.auth.currentUser}");
+
+                              await _authService.sendVerificationEmail();
                               await DatabaseService().addUserInfo(RmEasyUser(
                                   uid_: _authService.auth.currentUser.uid,
                                   name_: _authService.auth.currentUser.uid,
@@ -165,7 +171,6 @@ class _RegisterState extends State<Register> {
                                   grade_: 2,
                                   dob_: "12-27-2001",
                                   surveyComplete_: false));
-                              _authService.sendVerificationEmail();
                               setState(() {
                                 note =
                                     "verification email sent to ${_authService.user}";
@@ -193,7 +198,7 @@ class _RegisterState extends State<Register> {
                             },
                             child: Container(
                               width: double.infinity,
-                              height: 100,
+                              height: 50,
                               color: Colors.green,
                               child: Text('You can try'),
                             )),
@@ -204,30 +209,6 @@ class _RegisterState extends State<Register> {
               ),
             ),
           );
-  }
-
-  Future<void> sendVerificationEmail(AuthService _authService) async {
-    await _authService.auth.currentUser
-        .sendEmailVerification(); //sends verification email
-    setState(() {
-      note = "verification email sent to ${_authService.user}";
-    });
-    timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      checkEmailVerified(_authService);
-    });
-  }
-
-  Future<void> checkEmailVerified(AuthService _authService) async {
-    User user = _authService.auth.currentUser;
-
-    await user.reload();
-    if (user.emailVerified) {
-      timer.cancel();
-
-      //https://stackoverflow.com/questions/51484032/flutter-navigation-push-replacement-is-not-working-when-not-placed-in-the-first
-      //Navigator.of(context).popUntil((route) => route.isFirst);
-      //Navigator.pushReplacementNamed(context, '/survey');
-    }
   }
 }
 

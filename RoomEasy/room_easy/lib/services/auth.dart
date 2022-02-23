@@ -3,7 +3,7 @@ import 'package:room_easy/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:async';
 
-class AuthService extends ChangeNotifier{
+class AuthService extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   Timer timer;
 
@@ -16,20 +16,20 @@ class AuthService extends ChangeNotifier{
     return _auth;
   }
 
-
   Future sendVerificationEmail() async {
-    await _auth.currentUser
-        .sendEmailVerification(); //sends verification email
-   timer = Timer.periodic(Duration(seconds: 5), (timer) {
+    print("verification email fired");
+    await _auth.currentUser.sendEmailVerification(); //sends verification email
+    print("done firing");
+    timer = Timer.periodic(Duration(seconds: 5), (timer) {
       checkEmailVerified();
     });
   }
 
   Future checkEmailVerified() async {
+    print("TJHIOS TIMER IS FINRIING");
     User user = _auth.currentUser;
     await user.reload();
     if (user.emailVerified) {
-
       timer.cancel();
       notifyListeners();
 
@@ -39,9 +39,10 @@ class AuthService extends ChangeNotifier{
     }
   }
 
-
   Future registerWithEmailAndPassword(String email, String password) async {
+    email = email.trim();
     try {
+      print("Register method fired");
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
       return userCredential.user;
@@ -50,34 +51,37 @@ class AuthService extends ChangeNotifier{
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
         print('The account already exists for that email.');
+      } else {
+        print("OK WHAT ");
+        print(e.message + "$email 111111111");
+        return e.code;
       }
-      return e.code;
     } catch (e) {
       print(e);
-      return ("Invalid email");
+      print("WTF WHY");
+      return e.code;
     }
   }
-  Future signInWithEmailAndPassword(String email, String password) async{
+
+  Future signInWithEmailAndPassword(String email, String password) async {
+    email = email.trim();
     try {
       print("sign in method fired");
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: email,
-          password: password
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
       print("ok");
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found' || e.code=='invalid-email') {
+      if (e.code == 'user-not-found' || e.code == 'invalid-email') {
+        print(e.message);
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
       }
       return e.code;
-    }
-    catch(e)
-    {
+    } catch (e) {
       print("jeffy");
-      return('user-not-found');
+      return ('user-not-found');
     }
   }
 

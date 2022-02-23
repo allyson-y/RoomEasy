@@ -11,7 +11,7 @@ class DatabaseService {
       FirebaseFirestore.instance.collection('chatrooms');
 
   Future<void> addUserInfo(RmEasyUser user) async {
-    //print("USER IS BEING ADDED ");
+    print("USER IS BEING ADDED ");
     return userCollection
         .doc(user.uid_)
         .set({
