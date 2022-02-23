@@ -130,10 +130,13 @@ class _RegisterState extends State<Register> {
                             setState(() {
                               loading = true;
                             });
-                            dynamic result = await _authService
-                                .registerWithEmailAndPassword(email, password);
+                            dynamic result =
+                                await _authService.registerWithEmailAndPassword(
+                                    email.trim(),
+                                    password); //NOTE: without trim it gives a email badly formatted bug when you enter email with space
                             if (result == "invalid-email") {
                               setState(() {
+                                print("WAAAAA");
                                 error = "Email invalid";
                                 loading = false;
                               });
