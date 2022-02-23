@@ -17,13 +17,16 @@ class AuthService extends ChangeNotifier {
   }
 
   Future sendVerificationEmail() async {
+    print("verification email fired");
     await _auth.currentUser.sendEmailVerification(); //sends verification email
+    print("done firing");
     timer = Timer.periodic(Duration(seconds: 5), (timer) {
       checkEmailVerified();
     });
   }
 
   Future checkEmailVerified() async {
+    print("TJHIOS TIMER IS FINRIING");
     User user = _auth.currentUser;
     await user.reload();
     if (user.emailVerified) {
@@ -37,6 +40,7 @@ class AuthService extends ChangeNotifier {
   }
 
   Future registerWithEmailAndPassword(String email, String password) async {
+    email = email.trim();
     try {
       print("Register method fired");
       UserCredential userCredential = await _auth
@@ -60,6 +64,7 @@ class AuthService extends ChangeNotifier {
   }
 
   Future signInWithEmailAndPassword(String email, String password) async {
+    email = email.trim();
     try {
       print("sign in method fired");
       UserCredential userCredential = await FirebaseAuth.instance
@@ -68,6 +73,7 @@ class AuthService extends ChangeNotifier {
       return userCredential.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found' || e.code == 'invalid-email') {
+        print(e.message);
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user.');
