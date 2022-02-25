@@ -30,6 +30,8 @@ class _SwipeScreenState extends State<SwipeScreen> {
         ? SpinKitChasingDots(color: Color(0xffe24e3e), size: 50)
         : PageView(
             controller: controller,
+            //NOTE: do we want to pass in a provider in this build function and for each PageView pass in a roomeasy user so we can sort of load in all the roomeasy
+            //users before this runs. idk. Pros would be that we woudn't have to do build for each pageview that loads to load in our own user.
             children: HelperFunctions().mapRmEasyUserToWidget(
                 userList), //NOTE: probably just map here, instead of calling a separate HelperFunctions() for readibility
           );
