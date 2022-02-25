@@ -68,6 +68,10 @@ class _SignInState extends State<SignIn> {
                           email = val;
                         },
                         decoration: InputDecoration(
+                            enabledBorder: const OutlineInputBorder(
+                              // width: 0.0 produces a thin "hairline" border
+                              borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                            ),
                             border: OutlineInputBorder(),
                             labelText: 'Email',
                             hintText: 'Enter valid email id as abc@gmail.com'),
@@ -83,7 +87,13 @@ class _SignInState extends State<SignIn> {
                         },
                         obscureText: true,
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(),
+                            enabledBorder: const OutlineInputBorder(
+                              // width: 0.0 produces a thin "hairline" border
+                              borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                            ),
+                            border: OutlineInputBorder(
+                                borderSide: new BorderSide(color: Color(0xff201cbb))
+                            ),
                             labelText: 'Password',
                             hintText: 'Enter secure password'),
                       ),

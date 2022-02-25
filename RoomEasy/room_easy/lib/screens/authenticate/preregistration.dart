@@ -85,6 +85,7 @@ class HelpScreen extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: const Text('About RoomEasy'),
+          backgroundColor: Color(0xff201cbb),
         ),
         body: Center(
           child: Column(
@@ -100,6 +101,9 @@ class HelpScreen extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xff201cbb))
+                    ),
                   onPressed: () {
                     Navigator.pop(context);
                   },
