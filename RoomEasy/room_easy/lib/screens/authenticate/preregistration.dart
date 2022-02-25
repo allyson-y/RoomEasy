@@ -18,6 +18,7 @@ class _PreRegistrationState extends State<PreRegistration> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Color(0xffffefaf),
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         //mainAxisAlignment: MainAxisAlignment.center,
@@ -27,7 +28,7 @@ class _PreRegistrationState extends State<PreRegistration> {
               alignment: Alignment.topRight,
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
-                  color: Colors.black,
+                  color: Color(0xffffefaf),
                   child: IconButton(
                     icon: Icon(Icons.help),
                     onPressed: () {
@@ -36,7 +37,7 @@ class _PreRegistrationState extends State<PreRegistration> {
                         MaterialPageRoute(builder: (context) => HelpScreen()),
                       );
                     },
-                    color: Colors.blue[400],
+                    color: Color(0xff201cbb),
                   )
               )
           ),
@@ -45,7 +46,7 @@ class _PreRegistrationState extends State<PreRegistration> {
             child: new Image.asset(
               'assets/roomEasy.png',
               width: 200.0,
-
+              height: 200.0
             ),
           ),
           SizedBox(
@@ -53,7 +54,7 @@ class _PreRegistrationState extends State<PreRegistration> {
           ),
           TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: Colors.blue[400],
+                backgroundColor: Color(0xff201cbb),
               ),
               onPressed: () {
                 widget.toggleView(2);
@@ -68,7 +69,8 @@ class _PreRegistrationState extends State<PreRegistration> {
                 widget.toggleView(1);
                 //return Wrapper(registration: false);
               },
-              child: Text('Log in')),
+              child: Text('Log in',
+              style: TextStyle(color: Color(0xff201cbb)))),
         ],
       ),
     );

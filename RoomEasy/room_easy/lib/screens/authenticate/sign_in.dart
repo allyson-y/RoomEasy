@@ -37,10 +37,10 @@ class _SignInState extends State<SignIn> {
             },
             child: Scaffold(
               resizeToAvoidBottomInset: false,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                title: Text("Login Page"),
-              ),
+              backgroundColor: Color(0xffffefaf),
+              // appBar: AppBar(
+              //   title: Text("Sign In"),
+              // ),
               body: Form(
                 key: _formKey,
                 child: Column(
@@ -50,7 +50,7 @@ class _SignInState extends State<SignIn> {
                       child: Center(
                         child: Container(
                             width: 200,
-                            height: 150,
+                            height: 200,
                             /*decoration: BoxDecoration(
                             color: Colors.red,
                             borderRadius: BorderRadius.circular(50.0)),*/
@@ -94,23 +94,24 @@ class _SignInState extends State<SignIn> {
                       },
                       child: Text(
                         'Forgot Password',
-                        style: TextStyle(color: Colors.blue, fontSize: 15),
+                        style: TextStyle(color: Color(0xff201cbb), fontSize: 15),
                       ),
                     ),
                     Container(
                       height: 50,
                       width: 250,
                       decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: Color(0xff201cbb),
                           borderRadius: BorderRadius.circular(20)),
                       child: ElevatedButton(
                         style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Color(0xff201cbb)),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                               side: BorderSide(
-                                color: Colors.blue,
+                                color: Color(0xff201cbb),
                                 width: 2.0,
                               ),
                             ),
