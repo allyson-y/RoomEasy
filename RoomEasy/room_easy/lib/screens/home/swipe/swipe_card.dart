@@ -223,11 +223,12 @@ class _SwipeCardState extends State<SwipeCard> {
                             BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
                         alignment: Alignment.center,
                         child: Text(
+                          //this logic could be made more readable.
                           (currUser.matchList_ == null ||
-                                  currUser.matchList_
+                                  !currUser.matchList_
                                       .contains(widget.user_.uid_))
-                              ? "already sent"
-                              : "match",
+                              ? "match"
+                              : "already sent",
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 26.0,
