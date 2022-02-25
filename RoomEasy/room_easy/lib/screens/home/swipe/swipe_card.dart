@@ -1,13 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:room_easy/services/auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:provider/provider.dart';
+import 'package:room_easy/models/user.dart';
+import 'package:room_easy/screens/authenticate/authenticate.dart';
+import 'package:room_easy/screens/survey/survey.dart';
+import 'package:room_easy/services/auth.dart';
+import 'package:room_easy/services/database.dart';
 
 /**
  * Created by Kevin Kim kekim@hmc.edu on 2/22/22 at 2:45 AM
  */
 //THIS IS CURRENTLY JUST A SKELETON TEMPLATE
-class SwipeCard extends StatelessWidget {
+class SwipeCard extends StatefulWidget {
   String name;
   SwipeCard(@required this.name);
+  @override
+  _SwipeCardState createState() => _SwipeCardState();
+}
+
+class _SwipeCardState extends State<SwipeCard> {
   @override
   Widget build(BuildContext context) {
     final _auth = context.watch<AuthService>().auth;
@@ -141,7 +157,7 @@ class SwipeCard extends StatelessWidget {
           Container(
             child: Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0),
+              const EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -157,7 +173,7 @@ class SwipeCard extends StatelessWidget {
                     height: 10.0,
                   ),
                   Text(
-                    name,
+                    widget.name,
                     style: TextStyle(
                       fontSize: 22.0,
                       fontStyle: FontStyle.italic,
@@ -194,3 +210,4 @@ class SwipeCard extends StatelessWidget {
     );
   }
 }
+
