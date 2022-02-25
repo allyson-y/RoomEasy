@@ -33,7 +33,7 @@ class _PreRegistrationState extends State<PreRegistration> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => helpScreen()),
+                        MaterialPageRoute(builder: (context) => HelpScreen()),
                       );
                     },
                     color: Colors.blue[400],
@@ -75,7 +75,7 @@ class _PreRegistrationState extends State<PreRegistration> {
   }
 }
 
-class helpScreen extends StatelessWidget {
+class HelpScreen extends StatelessWidget {
   //const helpScreen({Key? key}) : super(key: key);
 
   @override
