@@ -5,6 +5,7 @@ import 'package:room_easy/models/chat.dart';
 import 'package:room_easy/models/chatProfiles.dart';
 import 'package:room_easy/screens/home/chat/message_list.dart';
 import 'package:room_easy/services/database.dart';
+import 'package:room_easy/services/auth.dart';
 
 class ChatDetailPage extends StatefulWidget {
   String chatRoomID_;

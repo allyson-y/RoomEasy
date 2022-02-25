@@ -41,6 +41,22 @@ class DatabaseService {
         });
   }
 
+  Future<void> updateMatchList(String uid_, String uid_add_) async {
+    //NOTE: Do we want as a parameter uid_add_ or matched_users_add ?
+    List<String> l = [uid_add_];
+    return userCollection
+        .doc(uid_)
+        .update({
+          'matches': FieldValue.arrayUnion(l),
+        })
+        .then((value) => print("$uid_ survey complete"))
+        .catchError((error) => print(
+            "Failed to add user $uid_ survey not complete due to error $error"))
+        .whenComplete(() {
+          print("DONE UPDATED");
+        });
+  }
+
   RmEasyUser _userFromSnapshot(DocumentSnapshot snapshot) {
     return RmEasyUser(
         name_: snapshot.get('name'),
@@ -114,7 +130,7 @@ class DatabaseService {
         messageText: "PLACEMENT TEXT IN CLASS DATABASE",
         time: "PLACEMENT TIME",
         imageURL:
-            "https://static.wikia.nocookie.net/sml/images/3/35/5FF627B3-ADEB-47ED-BC0E-29908332F74C.webp/revision/latest?cb=20210422030240",
+            "https://upload.wikimedia.org/wikipedia/en/thumb/a/a3/CMS_Stags_and_Athenas_logo.svg/1200px-CMS_Stags_and_Athenas_logo.svg.png",
         uid_: doc.get('uid'),
       );
     }).toList();

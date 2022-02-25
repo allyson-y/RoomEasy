@@ -19,7 +19,7 @@ class RmEasyUser {
   int grade_; // 1-4
   bool surveyComplete_;
   var dob_;
-  List<String> matchList_;
+  Set<String> matchList_; //list of uids_ that contain matches
   RmEasyUser(
       {this.uid_,
       this.name_,

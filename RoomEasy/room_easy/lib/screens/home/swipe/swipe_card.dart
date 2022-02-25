@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:room_easy/services/auth.dart';
 
 /**
  * Created by Kevin Kim kekim@hmc.edu on 2/22/22 at 2:45 AM
@@ -9,6 +10,7 @@ class SwipeCard extends StatelessWidget {
   SwipeCard(@required this.name);
   @override
   Widget build(BuildContext context) {
+    final _auth = context.watch<AuthService>().auth;
     return Scaffold(
       body: Column(
         children: [
@@ -36,7 +38,7 @@ class SwipeCard extends StatelessWidget {
                         height: 10.0,
                       ),
                       Text(
-                        "Natasha",
+                        "SW4GM0N3YBAGS",
                         style: TextStyle(
                           fontSize: 22.0,
                           color: Colors.white,
@@ -172,35 +174,21 @@ class SwipeCard extends StatelessWidget {
             height: 20.0,
           ),
           Container(
-            width: 300.00,
-            child: RaisedButton(
-                onPressed: () {},
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(80.0)),
-                elevation: 0.0,
-                padding: EdgeInsets.all(0.0),
-                child: Ink(
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        begin: Alignment.centerRight,
-                        end: Alignment.centerLeft,
-                        colors: [Colors.pink, Colors.pinkAccent]),
-                    borderRadius: BorderRadius.circular(30.0),
+              width: 300.00,
+              child: ElevatedButton(
+                onPressed: () async {},
+                child: Container(
+                  constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Match",
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 26.0,
+                        fontWeight: FontWeight.w300),
                   ),
-                  child: Container(
-                    constraints:
-                        BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Contact me",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 26.0,
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ),
-                )),
-          ),
+                ),
+              )),
         ],
       ),
     );
