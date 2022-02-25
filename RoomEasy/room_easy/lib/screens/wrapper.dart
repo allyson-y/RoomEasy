@@ -42,30 +42,25 @@ class _WrapperState extends State<Wrapper> {
     final _auth = context.watch<AuthService>().auth;
     final SurveyScreen = Provider.of<Survey>(
         context); //NOTE: do we need this now that anytime our instance of rmeasy user changes, then after survey finishes it will automatically redirect instead of having to call the survey provider?
-    final rmEasyUser = Provider.of<RmEasyUser>(context);
     print("REBUILT");
 
     if (user == null || !_auth.currentUser.emailVerified) {
       return Authenticate();
     } else {
-      return (rmEasyUser == null)
-          ? SpinKitDancingSquare(
-              color: Colors.brown,
-              size: 50,
-            )
-          : (rmEasyUser.surveyComplete_ ? Home() : SurveyScreen);
-    }
-
-    /*return FutureBuilder(
+      return FutureBuilder(
           // we use a futurebuilder here since the user data only comes in a future<rmeasyuser> and the build method isn't asynchronous.
           future: DatabaseService().getUserSnapshot(user.uid),
           builder: (BuildContext context, AsyncSnapshot<RmEasyUser> snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
               print(snapshot.data.uid_);
-              return snapshot.data.surveyComplete_ ? Home() : SurveyScreen;
+              return StreamProvider<RmEasyUser>.value(
+                  value: DatabaseService()
+                      .getUserStream(AuthService().auth.currentUser.uid),
+                  child: snapshot.data.surveyComplete_ ? Home() : SurveyScreen);
             }
             return SpinKitChasingDots(color: Colors.teal, size: 50);
-          });*/
+          });
+    }
   }
 }

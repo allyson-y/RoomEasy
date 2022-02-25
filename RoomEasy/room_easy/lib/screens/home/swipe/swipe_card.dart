@@ -14,6 +14,9 @@ import 'package:room_easy/services/database.dart';
 
 /**
  * Created by Kevin Kim kekim@hmc.edu on 2/22/22 at 2:45 AM
+ *
+ *
+ *
  */
 //THIS IS CURRENTLY JUST A SKELETON TEMPLATE
 class SwipeCard extends StatefulWidget {
