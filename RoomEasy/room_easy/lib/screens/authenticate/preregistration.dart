@@ -18,6 +18,7 @@ class _PreRegistrationState extends State<PreRegistration> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Color(0xffffefaf),
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       child: Column(
         //mainAxisAlignment: MainAxisAlignment.center,
@@ -27,16 +28,16 @@ class _PreRegistrationState extends State<PreRegistration> {
               alignment: Alignment.topRight,
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Material(
-                  color: Colors.black,
+                  color: Color(0xffffefaf),
                   child: IconButton(
                     icon: Icon(Icons.help),
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => helpScreen()),
+                        MaterialPageRoute(builder: (context) => HelpScreen()),
                       );
                     },
-                    color: Colors.blue[400],
+                    color: Color(0xff201cbb),
                   )
               )
           ),
@@ -45,7 +46,7 @@ class _PreRegistrationState extends State<PreRegistration> {
             child: new Image.asset(
               'assets/roomEasy.png',
               width: 200.0,
-
+              height: 200.0
             ),
           ),
           SizedBox(
@@ -53,7 +54,7 @@ class _PreRegistrationState extends State<PreRegistration> {
           ),
           TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: Colors.blue[400],
+                backgroundColor: Color(0xff201cbb),
               ),
               onPressed: () {
                 widget.toggleView(2);
@@ -68,21 +69,24 @@ class _PreRegistrationState extends State<PreRegistration> {
                 widget.toggleView(1);
                 //return Wrapper(registration: false);
               },
-              child: Text('Log in')),
+              child: Text('Log in',
+              style: TextStyle(color: Color(0xff201cbb)))),
         ],
       ),
     );
   }
 }
 
-class helpScreen extends StatelessWidget {
+class HelpScreen extends StatelessWidget {
   //const helpScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffffefaf),
         appBar: AppBar(
           title: const Text('About RoomEasy'),
+          backgroundColor: Color(0xff201cbb),
         ),
         body: Center(
           child: Column(
@@ -98,6 +102,9 @@ class helpScreen extends StatelessWidget {
                   ),
                 ),
                 ElevatedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xff201cbb))
+                    ),
                   onPressed: () {
                     Navigator.pop(context);
                   },

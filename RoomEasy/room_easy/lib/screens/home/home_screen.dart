@@ -21,6 +21,7 @@ class _HomeState extends State<Home> {
     MessageScreen(),
     ProfileScreen(),
   ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -35,20 +36,31 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: _widgetOptions[_selectedIndex],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Chats'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.account_box_rounded), label: 'Profile'),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
-    );
+        body: Center(
+          child: _widgetOptions[_selectedIndex],
+        ),
+        bottomNavigationBar: Theme(
+          data: Theme.of(context).copyWith(
+              // sets the background color of the `BottomNavigationBar`
+              canvasColor: Color(0xff83b799),
+              // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+              primaryColor: Color(0xffe24e3e),
+              textTheme: Theme.of(context)
+                  .textTheme
+                  .copyWith(caption: new TextStyle(color: Colors.yellow))),
+          // sets the inactive color of the `BottomNavigationBar`
+          child: new BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.message), label: 'Chats'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.account_box_rounded), label: 'Profile'),
+            ],
+            currentIndex: _selectedIndex,
+            selectedItemColor: Color(0xffe24e3e),
+            onTap: _onItemTapped,
+          ),
+        ));
   }
 }

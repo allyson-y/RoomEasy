@@ -25,7 +25,7 @@ class _SwipeScreenState extends State<SwipeScreen> {
     //NOTE: We can choose between PageView, PageView.custom, and PageView.builder. Which is better suited for our purposes?
 
     return (userList == null)
-        ? SpinKitChasingDots(color: Colors.pink, size: 50)
+        ? SpinKitChasingDots(color: Color(0xffe24e3e), size: 50)
         : PageView(
             controller: controller,
             children: HelperFunctions().mapRmEasyUserToWidget(userList),

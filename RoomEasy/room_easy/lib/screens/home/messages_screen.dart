@@ -31,6 +31,7 @@ class _MessageScreenState extends State<MessageScreen> {
             size: 50,
           )
         : Scaffold(
+            backgroundColor: Color(0xffffefaf),
             body: SingleChildScrollView(
               physics: BouncingScrollPhysics(),
               child: Column(
@@ -53,13 +54,13 @@ class _MessageScreenState extends State<MessageScreen> {
                             height: 30,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(30),
-                              color: Colors.pink[50],
+                              color: Color(0x50e24e3e),
                             ),
                             child: Row(
                               children: <Widget>[
                                 Icon(
                                   Icons.add,
-                                  color: Colors.pink,
+                                  color: Color(0xffe24e3e),
                                   size: 20,
                                 ),
                                 SizedBox(

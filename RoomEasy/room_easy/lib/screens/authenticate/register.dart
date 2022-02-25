@@ -42,10 +42,10 @@ class _RegisterState extends State<Register> {
             },
             child: Scaffold(
               resizeToAvoidBottomInset: false,
-              backgroundColor: Colors.white,
-              appBar: AppBar(
-                title: Text("Create an Account"),
-              ),
+              backgroundColor: Color(0xffffefaf),
+              // appBar: AppBar(
+              //   title: Text("Create an Account"),
+              // ),
               body: Form(
                 key: _formKey,
                 child: Column(
@@ -55,7 +55,7 @@ class _RegisterState extends State<Register> {
                       child: Center(
                         child: Container(
                             width: 200,
-                            height: 150,
+                            height: 200,
                             /*decoration: BoxDecoration(
                             color: Colors.red,
                             borderRadius: BorderRadius.circular(50.0)),*/
@@ -98,29 +98,33 @@ class _RegisterState extends State<Register> {
                             hintText: 'Enter secure password'),
                       ),
                     ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     TextButton(
                       onPressed: () {
                         //TODO FORGOT PASSWORD SCREEN GOES HERE
                       },
                       child: Text(
                         'Forgot Password',
-                        style: TextStyle(color: Colors.blue, fontSize: 15),
+                        style: TextStyle(color: Color(0xff201cbb), fontSize: 15),
                       ),
                     ),
                     Container(
                       height: 50,
                       width: 250,
                       decoration: BoxDecoration(
-                          color: Colors.blue,
+                          color: Color(0xff201cbb),
                           borderRadius: BorderRadius.circular(20)),
                       child: ElevatedButton(
                         style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(Color(0xff201cbb)),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                               side: BorderSide(
-                                color: Colors.blue,
+                                color: Color(0xff201cbb),
                                 width: 2.0,
                               ),
                             ),
@@ -156,6 +160,10 @@ class _RegisterState extends State<Register> {
                               setState(() {
                                 loading = false;
                               });
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) => _buildPopupDialog(context),
+                              );
                               print(
                                   "CURRENT USER: ${_authService.auth.currentUser}");
 
@@ -206,4 +214,26 @@ class _RegisterState extends State<Register> {
             ),
           );
   }
+}
+
+Widget _buildPopupDialog(BuildContext context) {
+  return new AlertDialog(
+    title: const Text('Terms and Conditions'),
+    content: new Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text("This is where the terms and conditions will go"),
+      ],
+    ),
+    actions: <Widget>[
+      new FlatButton(
+        onPressed: () {
+          Navigator.of(context).pop();
+        },
+        textColor: Theme.of(context).primaryColor,
+        child: const Text('Accept'),
+      ),
+    ],
+  );
 }
