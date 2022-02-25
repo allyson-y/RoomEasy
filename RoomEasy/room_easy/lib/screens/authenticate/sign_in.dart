@@ -98,6 +98,9 @@ class _SignInState extends State<SignIn> {
                             hintText: 'Enter secure password'),
                       ),
                     ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     TextButton(
                       onPressed: () {
                         //TODO FORGOT PASSWORD SCREEN GOES HERE
