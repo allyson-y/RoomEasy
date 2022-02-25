@@ -157,7 +157,7 @@ class _SwipeCardState extends State<SwipeCard> {
           Container(
             child: Padding(
               padding:
-              const EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0),
+                  const EdgeInsets.symmetric(vertical: 30.0, horizontal: 16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -210,4 +210,3 @@ class _SwipeCardState extends State<SwipeCard> {
     );
   }
 }
-
