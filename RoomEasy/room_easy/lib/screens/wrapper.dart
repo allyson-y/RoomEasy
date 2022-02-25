@@ -33,24 +33,39 @@ class _WrapperState extends State<Wrapper> {
 
   @override
   Widget build(BuildContext context) {
+    /**
+     * these providers are super confusing.
+     *
+     * difference between user and rmEasyUser is that user is like the firebase currently signed in user thing
+     */
     final user = Provider.of<User>(context);
     final _auth = context.watch<AuthService>().auth;
-    final SurveyScreen = Provider.of<Survey>(context);
+    final SurveyScreen = Provider.of<Survey>(
+        context); //NOTE: do we need this now that anytime our instance of rmeasy user changes, then after survey finishes it will automatically redirect instead of having to call the survey provider?
+    final rmEasyUser = Provider.of<RmEasyUser>(context);
     print("REBUILT");
 
     if (user == null || !_auth.currentUser.emailVerified) {
       return Authenticate();
     } else {
-      return FutureBuilder(
+      return (rmEasyUser == null)
+          ? SpinKitDancingSquare(
+              color: Colors.brown,
+              size: 50,
+            )
+          : (rmEasyUser.surveyComplete_ ? Home() : SurveyScreen);
+    }
+
+    /*return FutureBuilder(
           // we use a futurebuilder here since the user data only comes in a future<rmeasyuser> and the build method isn't asynchronous.
           future: DatabaseService().getUserSnapshot(user.uid),
           builder: (BuildContext context, AsyncSnapshot<RmEasyUser> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
               print(snapshot.data.uid_);
               return snapshot.data.surveyComplete_ ? Home() : SurveyScreen;
             }
             return SpinKitChasingDots(color: Colors.teal, size: 50);
-          });
-    }
+          });*/
   }
 }

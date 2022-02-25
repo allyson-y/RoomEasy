@@ -42,7 +42,7 @@ class DatabaseService {
   }
 
   Future<void> updateMatchList(String uid_, String uid_add_) async {
-    //NOTE: Do we want as a parameter uid_add_ or matched_users_add ?
+    //NOTE: Do we want as a parameter String uid_add_ or List<String> matched_users_add ?
     List<String> l = [uid_add_];
     return userCollection
         .doc(uid_)
@@ -77,9 +77,10 @@ class DatabaseService {
    * non stream user data access is below
    */
   Future<RmEasyUser> getUserSnapshot(String uid) {
+    print("called usna");
     return userCollection.doc(uid).get().then((DocumentSnapshot snapshot) {
       return _userFromSnapshot(snapshot);
-    });
+    }).catchError((error) => print(error.toString()));
   }
 
   /*Future<void> addChatRoomInfo(RmEasyChatRoom room) async{
@@ -145,6 +146,7 @@ class DatabaseService {
       return RmEasyUser(
         uid_: doc.get('uid'),
         name_: doc.get('name'),
+        matchList_: (doc.get('matches')),
       );
       //return _userFromSnapshot(doc);
     }).toList();
@@ -158,4 +160,18 @@ class DatabaseService {
   Stream<List<RmEasyUser>> get allUsers {
     return userCollection.snapshots().map(_rmEasyUsersFromSnapshot);
   }
+
+/**
+ * returns whether uid_add_ is in the matches field of uid_
+ *
+ * will come in handy in swipe screen
+ *
+ *
+ * hmm nvm we probably don't need this. Commented out for now
+    Future<bool> inMatchList(String uid_, String uid_add_) {
+    return userCollection.doc(uid_).get().then((DocumentSnapshot snapshot) {
+    return (snapshot.get('matches') as List<String>).contains(uid_add_);
+    });
+    }
+ */
 }

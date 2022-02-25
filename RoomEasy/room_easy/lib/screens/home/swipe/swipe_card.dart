@@ -17,16 +17,33 @@ import 'package:room_easy/services/database.dart';
  */
 //THIS IS CURRENTLY JUST A SKELETON TEMPLATE
 class SwipeCard extends StatefulWidget {
-  String name;
-  SwipeCard(@required this.name);
+  bool inMatchList_ = false;
+  RmEasyUser user_;
+  SwipeCard(@required this.user_);
   @override
   _SwipeCardState createState() => _SwipeCardState();
 }
 
 class _SwipeCardState extends State<SwipeCard> {
   @override
+  /*void initState() async {
+    // TODO: implement initState
+    super.initState();
+    widget.inMatchList_ = false;
+    widget.inMatchList_ = await DatabaseService()
+        .getUserSnapshot(AuthService().auth.currentUser.uid)
+        .then((user) {
+      return user.matchList_.contains(widget.user_.uid_);
+    });
+    8/
+}
+   */
+
+  @override
   Widget build(BuildContext context) {
+    final currUser = Provider.of<RmEasyUser>(context);
     final _auth = context.watch<AuthService>().auth;
+    String buttonText = "";
     return Scaffold(
       body: Column(
         children: [
@@ -173,7 +190,7 @@ class _SwipeCardState extends State<SwipeCard> {
                     height: 10.0,
                   ),
                   Text(
-                    widget.name,
+                    widget.user_.name_,
                     style: TextStyle(
                       fontSize: 22.0,
                       fontStyle: FontStyle.italic,
@@ -191,13 +208,19 @@ class _SwipeCardState extends State<SwipeCard> {
           ),
           Container(
               width: 300.00,
+              //Match Button!
               child: ElevatedButton(
-                onPressed: () async {},
+                onPressed: () async {
+                  await DatabaseService().updateMatchList(
+                      AuthService().auth.currentUser.uid, widget.user_.uid_);
+                },
                 child: Container(
                   constraints: BoxConstraints(maxWidth: 300.0, minHeight: 50.0),
                   alignment: Alignment.center,
                   child: Text(
-                    "Match",
+                    currUser.matchList_.contains(widget.user_.uid_)
+                        ? "already sent"
+                        : "match",
                     style: TextStyle(
                         color: Colors.white,
                         fontSize: 26.0,

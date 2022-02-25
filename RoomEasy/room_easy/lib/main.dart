@@ -47,7 +47,10 @@ class RoomEasy extends StatelessWidget {
         //this is the provider to deal with user adds/preference updates?
         //NOTE: used in swipescreen extensively.
         StreamProvider<List<RmEasyUser>>.value(
-            value: DatabaseService().allUsers)
+            value: DatabaseService().allUsers),
+        StreamProvider<RmEasyUser>.value(
+            value: DatabaseService()
+                .getUserStream(AuthService().auth.currentUser.uid)),
       ],
       child: MaterialApp(
         home: Wrapper(),

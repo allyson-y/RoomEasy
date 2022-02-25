@@ -29,10 +29,13 @@ class HelperFunctions {
   /**
    * converts List<RmEasyUser> into the corresponding List<SwipeCard>
    * important part of swipe_screen.dart
+   *
+   *
+   * NOTE: Probably want to get rid of this and directly put this in the swipe_screen.dart
    */
   List<Widget> mapRmEasyUserToWidget(List<RmEasyUser> userList) {
     return userList.map((user) {
-      return SwipeCard(user.name_);
+      return SwipeCard(user);
     }).toList();
   }
 }
