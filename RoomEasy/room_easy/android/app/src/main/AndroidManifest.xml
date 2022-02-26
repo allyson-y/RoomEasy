@@ -2,7 +2,7 @@
     package="com.example.room_easy">
    <application
         android:label="room_easy"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
