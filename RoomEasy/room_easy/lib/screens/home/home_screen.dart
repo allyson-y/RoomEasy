@@ -35,6 +35,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Move chatprofiles provider here
     return Scaffold(
         body: Center(
           child: _widgetOptions[_selectedIndex],
