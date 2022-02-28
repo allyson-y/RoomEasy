@@ -17,11 +17,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   int _selfSleepStart = 10;
   int _selfSleepEnd = 12;
   int _selfMusicSliderVal = 100;
-  int _noiseSensitive = 100;
-  int _drinkFreqSliderVal;
-  int _roommateDrinkFreqSliderVal;
-  int _friendsOverSliderVal = 100;
   int _petsSensitive;
+  bool _noiseSwitch;
+  bool _selfDrinkSwitch;
+  bool _roommateDrinkSwitch;
+  bool _petSlider;
 
   List<String> friendlyRating_ = [
     "keep to myself",
@@ -48,20 +48,39 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Edit Profile'),
-        ),
+        backgroundColor: Color(0xffffefaf),
         body: SingleChildScrollView(
             padding: const EdgeInsets.all(4.0),
             physics: BouncingScrollPhysics(),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
                     Widget>[
-              TextField(
-                  controller: TextEditingController(text: _profileText),
-                  onChanged: (text) {
-                    _profileText = text;
-                  }),
+              Text(
+                "Profile",
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                // padding: const EdgeInsets.all(3.0),
+                child: TextField(
+                  cursorColor: Color(0xff201cbb),
+                    controller: TextEditingController(text: _profileText),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: "Edit Description",
+                    ),
+                    onChanged: (text) {
+                      _profileText = text;
+                    }),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
+              ),
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
@@ -78,11 +97,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   min: 100,
                   max: 500,
                   divisions: 4,
+                  activeColor: Color(0xff201cbb),
+                  inactiveColor: Color(0x88201cbb),
                   onChanged: (val) {
                     setState(() {
                       _friendlySliderVal = val.round();
                     });
                   }),
+              SizedBox(
+                height: 10.0,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
+              ),
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
@@ -97,11 +126,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   min: 100,
                   max: 500,
                   divisions: 4,
+                  activeColor: Color(0xff201cbb),
+                  inactiveColor: Color(0x88201cbb),
                   onChanged: (val) {
                     setState(() {
                       _selfCleanSliderVal = val.round();
                     });
                   }),
+              SizedBox(
+                height: 10.0,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
+              ),
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
@@ -116,11 +155,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   min: 100,
                   max: 500,
                   divisions: 4,
+                  activeColor: Color(0xff201cbb),
+                  inactiveColor: Color(0x88201cbb),
                   onChanged: (val) {
                     setState(() {
                       _roommateCleanSliderVal = val.round();
                     });
                   }),
+              SizedBox(
+                height: 10.0,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
+              ),
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
@@ -133,6 +182,8 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 min: 6.0,
                 max: 18.0,
                 divisions: 12,
+                activeColor: Color(0xff201cbb),
+                inactiveColor: Color(0x88201cbb),
                 values: RangeValues((_selfSleepStart ?? 10).toDouble(),
                     (_selfSleepEnd ?? 12).toDouble()),
                 labels: RangeLabels(
@@ -144,6 +195,42 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     _selfSleepEnd = values.end.round();
                   });
                 },
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                padding: const EdgeInsets.all(3.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('Are you sensitive to noise?',
+                          style: TextStyle(fontSize: 15.0)),
+                      Switch(
+                        onChanged: (val) {
+                          setState(() {
+                            _noiseSwitch = val;
+                          });
+                        },
+                        value: _noiseSwitch,
+                        activeColor: Color(0xff201cbb),
+                        inactiveTrackColor: Color(0x88201cbb),
+                      ),
+                    ]),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
               ),
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
@@ -159,95 +246,107 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   min: 100,
                   max: 500,
                   divisions: 4,
+                  activeColor: Color(0xff201cbb),
+                  inactiveColor: Color(0x88201cbb),
                   onChanged: (val) {
                     setState(() {
                       _selfMusicSliderVal = val.round();
                     });
                   }),
+              SizedBox(
+                height: 10.0,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                padding: const EdgeInsets.all(3.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('Do you drink/smoke?',
+                          style: TextStyle(fontSize: 15.0)),
+                      Switch(
+                        onChanged: (val) {
+                          setState(() {
+                            _selfDrinkSwitch = val;
+                          });
+                        },
+                        value: _selfDrinkSwitch,
+                        activeColor: Color(0xff201cbb),
+                        inactiveThumbColor: Color(0x88201cbb),
+                      ),
+                    ]),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
+              ),
+              Container(
+                margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                padding: const EdgeInsets.all(3.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text('Do you care if your roommate drinks/smokes?',
+                          style: TextStyle(fontSize: 14.0)),
+                      Switch(
+                        onChanged: (val) {
+                          setState(() {
+                            _roommateDrinkSwitch = val;
+                          });
+                        },
+                        value: _roommateDrinkSwitch,
+                        activeColor: Color(0xff201cbb),
+                        inactiveTrackColor: Color(0x88201cbb),
+                      ),
+                    ]),
+              ),
+              SizedBox(
+                height: 10.0,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
+              ),
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
                 child: Center(
-                  child: Text('Are you sensitive to noise?',
-                      style: TextStyle(fontSize: 15.0)),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('Are you comfortable with pets?',
+                            style: TextStyle(fontSize: 14.0)),
+                        Switch(
+                          onChanged: (val) {
+                            setState(() {
+                              _petSlider = val;
+                            });
+                          },
+                          value: _petSlider,
+                          activeColor: Color(0xff201cbb),
+                          inactiveTrackColor: Color(0x88201cbb),
+                        ),
+                      ]),
                 ),
               ),
-              Slider(
-                  label: (_noiseSensitive ?? 100.0).toDouble() == 100.0
-                      ? "no"
-                      : "yes",
-                  value: (_noiseSensitive ?? 100.0).toDouble(),
-                  min: 100,
-                  max: 200,
-                  divisions: 1,
-                  onChanged: (val) {
-                    setState(() {
-                      _noiseSensitive = val.round();
-                    });
-                  }),
-              Container(
-                margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-                padding: const EdgeInsets.all(3.0),
-                child: Center(
-                  child: Text('Do you drink/smoke?',
-                      style: TextStyle(fontSize: 15.0)),
-                ),
+              SizedBox(
+                height: 10.0,
               ),
-              Slider(
-                  label: (_drinkFreqSliderVal ?? 100.0).toDouble() == 100.0
-                      ? "no"
-                      : "yes",
-                  value: (_drinkFreqSliderVal ?? 100.0).toDouble(),
-                  min: 100,
-                  max: 200,
-                  divisions: 1,
-                  onChanged: (val) {
-                    setState(() {
-                      _drinkFreqSliderVal = val.round();
-                    });
-                  }),
-              Container(
-                margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-                padding: const EdgeInsets.all(3.0),
-                child: Center(
-                  child: Text('Do you care if your roommate drinks/smokes?',
-                      style: TextStyle(fontSize: 15.0)),
-                ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
               ),
-              Slider(
-                  label:
-                      (_roommateDrinkFreqSliderVal ?? 100.0).toDouble() == 100.0
-                          ? "no"
-                          : "yes",
-                  value: (_roommateDrinkFreqSliderVal ?? 100.0).toDouble(),
-                  min: 100,
-                  max: 200,
-                  divisions: 1,
-                  onChanged: (val) {
-                    setState(() {
-                      _roommateDrinkFreqSliderVal = val.round();
-                    });
-                  }),
-              Container(
-                margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-                padding: const EdgeInsets.all(3.0),
-                child: Center(
-                  child: Text('Are you comfortable with pets',
-                      style: TextStyle(fontSize: 15.0)),
-                ),
-              ),
-              Slider(
-                  label: friendsOverRating_[
-                      (_friendsOverSliderVal * .01).round() - 1],
-                  value: (_friendsOverSliderVal ?? 100.0).toDouble(),
-                  min: 100,
-                  max: 500,
-                  divisions: 4,
-                  onChanged: (val) {
-                    setState(() {
-                      _friendsOverSliderVal = val.round();
-                    });
-                  }),
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
@@ -264,11 +363,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   min: 100,
                   max: 200,
                   divisions: 1,
+                  activeColor: Color(0xff201cbb),
+                  inactiveColor: Color(0x88201cbb),
                   onChanged: (val) {
                     setState(() {
                       _petsSensitive = val.round();
                     });
                   }),
+              SizedBox(
+                height: 10.0,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Color(0x69272324),
+              ),
               Container(
                 margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
                 alignment: Alignment.center,
@@ -277,6 +386,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     Navigator.pop(context);
                   },
                   child: const Text('Done'),
+                  style:
+                    ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xff201cbb)),
+                    )
                 ),
               ),
             ])));

@@ -43,8 +43,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
               children: <Widget>[
                 // User card
                 BigUserCard(
-                  cardColor: Colors.red,
+                  cardColor: Color(0xffe24e3e),
                   userName: "Gertrude",
+                  backgroundMotifColor: Color(0xffe24e3e),
+                  userProfilePic: null, // work on this later
                   cardActionWidget: SettingsItem(
                     icons: Icons.edit,
                     iconStyle: IconStyle(
@@ -90,21 +92,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       iconStyle: IconStyle(backgroundColor: Colors.grey),
                       title: 'Change Filters',
                       subtitle: "Change your filters",
-                    ),
-                    SettingsItem(
-                      onTap: () {},
-                      icons: Icons.monetization_on_sharp,
-                      iconStyle: IconStyle(
-                        iconsColor: Colors.white,
-                        withBackground: true,
-                        backgroundColor: Colors.red,
-                      ),
-                      title: 'Dark mode',
-                      subtitle: "Automatic",
-                      trailing: Switch.adaptive(
-                        value: false,
-                        onChanged: (value) {},
-                      ),
                     ),
                   ],
                 ),
