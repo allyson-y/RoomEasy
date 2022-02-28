@@ -46,7 +46,7 @@ class _SwipeScreenFrontState extends State<SwipeScreenFront> {
                         height: 10.0,
                       ),
                       Text(
-                        "SW4GM0N3YBAGS",
+                        widget.user_.name_,
                         style: TextStyle(
                           fontSize: 22.0,
                           color: Colors.white,

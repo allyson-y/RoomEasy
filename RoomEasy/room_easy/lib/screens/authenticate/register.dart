@@ -1,15 +1,11 @@
 import 'dart:async';
-import 'package:room_easy/models/user.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:room_easy/models/user.dart';
 import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/services/database.dart';
 import 'package:room_easy/shared/loading.dart';
-import 'package:room_easy/shared/constants.dart';
-import 'package:room_easy/screens/survey/survey.dart';
-import 'package:provider/provider.dart';
-import 'package:room_easy/services/auth.dart';
 
 class Register extends StatefulWidget {
   final Function toggleView;
@@ -26,6 +22,7 @@ class _RegisterState extends State<Register> {
   String password = "";
   String error = "";
   String note = "";
+  String name = "";
   bool loading = false;
 
   Timer timer;
@@ -62,6 +59,62 @@ class _RegisterState extends State<Register> {
                             child: Image.asset('assets/roomEasy.png')),
                       ),
                     ),
+                    Padding(
+                      //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                      child: TextFormField(
+                        validator: (val) {
+                          return val.isEmpty ? "Enter Full Name" : null;
+                        },
+                        onChanged: (val) {
+                          name = val;
+                        },
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            labelText: 'Full Name',
+                            hintText: 'Enter Full Name'),
+                      ),
+                    ),
+                    /*Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          child: TextFormField(
+                            validator: (val) {
+                              return val.isEmpty ? "Enter Name" : null;
+                            },
+                            onChanged: (val) {
+                              name = val;
+                            },
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Name',
+                                hintText: 'Enter Full Name'),
+                          ),
+                        ),
+                        Padding(
+                          //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
+                          child: TextFormField(
+                            validator: (val) {
+                              return val.isEmpty ? "Enter Name" : null;
+                            },
+                            onChanged: (val) {
+                              name = val;
+                            },
+                            decoration: InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Name',
+                                hintText: 'Enter Full Name'),
+                          ),
+                        ),
+                      ],
+                    ),*/
                     Padding(
                       //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
                       padding: EdgeInsets.symmetric(horizontal: 15),
@@ -107,7 +160,8 @@ class _RegisterState extends State<Register> {
                       },
                       child: Text(
                         'Forgot Password',
-                        style: TextStyle(color: Color(0xff201cbb), fontSize: 15),
+                        style:
+                            TextStyle(color: Color(0xff201cbb), fontSize: 15),
                       ),
                     ),
                     Container(
@@ -118,7 +172,8 @@ class _RegisterState extends State<Register> {
                           borderRadius: BorderRadius.circular(20)),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Color(0xff201cbb)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color(0xff201cbb)),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -162,7 +217,8 @@ class _RegisterState extends State<Register> {
                               });
                               showDialog(
                                 context: context,
-                                builder: (BuildContext context) => _buildPopupDialog(context),
+                                builder: (BuildContext context) =>
+                                    _buildPopupDialog(context),
                               );
                               print(
                                   "CURRENT USER: ${_authService.auth.currentUser}");
@@ -170,7 +226,7 @@ class _RegisterState extends State<Register> {
                               await _authService.sendVerificationEmail();
                               await DatabaseService().addUserInfo(RmEasyUser(
                                   uid_: _authService.auth.currentUser.uid,
-                                  name_: _authService.auth.currentUser.uid,
+                                  name_: name,
                                   gender_: "",
                                   grade_: 2,
                                   dob_: "12-27-2001",
