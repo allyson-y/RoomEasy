@@ -16,24 +16,40 @@ class _SurveyState extends State<Survey> {
   int _roommateCleanSliderVal;
   int _selfSleepStart = 10;
   int _selfSleepEnd = 12;
-  int _bedtimeSliderVal;
-  int _oftenInRoomSliderVal;
-  int _selfMusicSliderVal;
-  int _roomateMusicSliderVal;
-  int _drinkFreqSliderVal;
+  int _selfMusicSliderVal = 100;
+  int _friendsOver = 100;
+  bool _noiseSwitch;
+  bool _selfDrinkSwitch;
+  bool _roommateDrinkSwitch;
+  bool _petSlider;
+
   List<String> friendlyRating_ = [
-    "not friendly",
-    "sort of friendly",
-    "average roomie",
-    "super friendly",
-    "possesive"
+    "keep to myself",
+    "mostly keep to myself",
+    "average",
+    "enjoy socializing",
+    "love socializing"
+  ];
+  List<String> musicRating_ = [
+    "don't listen to music",
+    "quietly with earphones",
+    "loudly with earphones",
+    "without earphones",
+    "blast on speaker"
+  ];
+  List<String> friendsOverRating_ = [
+    "never",
+    "occasionally",
+    "sometimes",
+    "frequently",
+    "all the time"
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: IntroductionScreen(
+        globalBackgroundColor: Color(0xffffefaf),
         onDone: () async {
           // When done button is press
           await DatabaseService()
@@ -44,78 +60,327 @@ class _SurveyState extends State<Survey> {
         skip: const Text("Skip"),
         done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
         showNextButton: true,
-        showBackButton: true,
+        //showBackButton: true,
         next: const Icon(Icons.arrow_forward),
-        back: const Icon(Icons.arrow_back),
+        //back: const Icon(Icons.arrow_back),
         freeze: true,
         scrollPhysics: const BouncingScrollPhysics(),
         pages: [
           PageViewModel(
-            title: "HE",
+            title: "Customize your preferences",
             bodyWidget: Form(
               child: Column(
                 children: <Widget>[
                   //NOTE: Can we encapsulate the Slider-Text combination into a single custom class? A worry is that the variables we pass in not might get passed by reference.
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text(
+                          'Do you prefer socializing or keeping to yourself?',
+                          style: TextStyle(fontSize: 15.0)),
+                    ),
+                  ),
                   Slider(
+                      label:
+                      friendlyRating_[(_friendlySliderVal * .01).round() - 1],
                       value: (_friendlySliderVal ?? 100.0).toDouble(),
                       min: 100,
                       max: 500,
                       divisions: 4,
+                      activeColor: Color(0xff201cbb),
+                      inactiveColor: Color(0x88201cbb),
                       onChanged: (val) {
                         setState(() {
                           _friendlySliderVal = val.round();
                         });
                       }),
-                  Text(friendlyRating_[(_friendlySliderVal * .01).round() - 1]),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  const Divider(
+                    height: 10,
+                    thickness: 1,
+                    color: Color(0x69272324),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text('How clean are you?',
+                          style: TextStyle(fontSize: 15.0)),
+                    ),
+                  ),
                   Slider(
+                      label: "${(_selfCleanSliderVal ?? 100.0).toInt() ~/ 100}",
                       value: (_selfCleanSliderVal ?? 100.0).toDouble(),
                       min: 100,
                       max: 500,
                       divisions: 4,
+                      activeColor: Color(0xff201cbb),
+                      inactiveColor: Color(0x88201cbb),
                       onChanged: (val) {
                         setState(() {
                           _selfCleanSliderVal = val.round();
                         });
                       }),
-                  Text(friendlyRating_[(_friendlySliderVal * .01).round() - 1]),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  const Divider(
+                    height: 10,
+                    thickness: 1,
+                    color: Color(0x69272324),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text('How clean do you want your roommate to be?',
+                          style: TextStyle(fontSize: 15.0)),
+                    ),
+                  ),
                   Slider(
+                      label: "${(_roommateCleanSliderVal ?? 100.0).toInt() ~/ 100}",
                       value: (_roommateCleanSliderVal ?? 100.0).toDouble(),
                       min: 100,
                       max: 500,
                       divisions: 4,
+                      activeColor: Color(0xff201cbb),
+                      inactiveColor: Color(0x88201cbb),
                       onChanged: (val) {
                         setState(() {
                           _roommateCleanSliderVal = val.round();
                         });
                       }),
-                  Text(friendlyRating_[(_friendlySliderVal * .01).round() - 1]),
-                ],
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  const Divider(
+                    height: 10,
+                    thickness: 1,
+                    color: Color(0x69272324),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                    padding: const EdgeInsets.all(3.0),
+                    child: Center(
+                      child: Text('When do sleep at night?',
+                          style: TextStyle(fontSize: 15.0)),
+                    ),
+                  ),
+                  RangeSlider(
+                    min: 6.0,
+                    max: 18.0,
+                    divisions: 12,
+                    activeColor: Color(0xff201cbb),
+                    inactiveColor: Color(0x88201cbb),
+                    values: RangeValues((_selfSleepStart ?? 10).toDouble(),
+                        (_selfSleepEnd ?? 12).toDouble()),
+                    labels: RangeLabels(
+                        HelperFunctions().sleepTimeFormat(_selfSleepStart.round()),
+                        HelperFunctions().sleepTimeFormat(_selfSleepEnd.round())),
+                    onChanged: (values) {
+                      setState(() {
+                        _selfSleepStart = values.start.round();
+                        _selfSleepEnd = values.end.round();
+                      });
+                    },
+                  ),
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  const Divider(
+                    height: 10,
+                    thickness: 1,
+                    color: Color(0x69272324),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                    padding: const EdgeInsets.all(3.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text('Are you sensitive to noise?',
+                              style: TextStyle(fontSize: 15.0)),
+                          Switch(
+                            onChanged: (val) {
+                              setState(() {
+                                _noiseSwitch = val;
+                              });
+                            },
+                            value: _noiseSwitch,
+                            activeColor: Color(0xff201cbb),
+                            inactiveTrackColor: Color(0x88201cbb),
+                          ),
+                        ]),
+                  ),
+                ]
               ),
             ),
           ),
           PageViewModel(
-            title: "A",
+            title: "Customize your preferences",
             bodyWidget: Column(
               children: <Widget>[
-                RangeSlider(
-                  min: 6.0,
-                  max: 18.0,
-                  divisions: 12,
-                  values: RangeValues((_selfSleepStart ?? 10).toDouble(),
-                      (_selfSleepEnd ?? 12).toDouble()),
-                  labels: RangeLabels(
-                      HelperFunctions()
-                          .sleepTimeFormat(_selfSleepStart.round()),
-                      HelperFunctions().sleepTimeFormat(_selfSleepEnd.round())),
-                  onChanged: (values) {
-                    setState(() {
-                      _selfSleepStart = values.start.round();
-                      _selfSleepEnd = values.end.round();
-                    });
-                  },
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                  padding: const EdgeInsets.all(3.0),
+                  child: Center(
+                    child: Text('How loud do you listen to music/videos?',
+                        style: TextStyle(fontSize: 15.0)),
+                  ),
                 ),
-                Text(friendlyRating_[(_friendlySliderVal * .01).round() - 1]),
-              ],
+                Slider(
+                    label: musicRating_[(_selfMusicSliderVal * .01).round() - 1],
+                    value: (_selfMusicSliderVal ?? 100.0).toDouble(),
+                    min: 100,
+                    max: 500,
+                    divisions: 4,
+                    activeColor: Color(0xff201cbb),
+                    inactiveColor: Color(0x88201cbb),
+                    onChanged: (val) {
+                      setState(() {
+                        _selfMusicSliderVal = val.round();
+                      });
+                    }),
+                SizedBox(
+                  height: 10.0,
+                ),
+                const Divider(
+                  height: 10,
+                  thickness: 1,
+                  color: Color(0x69272324),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                  padding: const EdgeInsets.all(3.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('Do you drink/smoke?',
+                            style: TextStyle(fontSize: 15.0)),
+                        Switch(
+                          onChanged: (val) {
+                            setState(() {
+                              _selfDrinkSwitch = val;
+                            });
+                          },
+                          value: _selfDrinkSwitch,
+                          activeColor: Color(0xff201cbb),
+                          inactiveThumbColor: Color(0x88201cbb),
+                        ),
+                      ]),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                const Divider(
+                  height: 10,
+                  thickness: 1,
+                  color: Color(0x69272324),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                  padding: const EdgeInsets.all(3.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('Do you care if your roommate drinks/smokes?',
+                            style: TextStyle(fontSize: 13.0)),
+                        Switch(
+                          onChanged: (val) {
+                            setState(() {
+                              _roommateDrinkSwitch = val;
+                            });
+                          },
+                          value: _roommateDrinkSwitch,
+                          activeColor: Color(0xff201cbb),
+                          inactiveTrackColor: Color(0x88201cbb),
+                        ),
+                      ]),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                const Divider(
+                  height: 10,
+                  thickness: 1,
+                  color: Color(0x69272324),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                  padding: const EdgeInsets.all(3.0),
+                  child: Center(
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text('Are you comfortable with pets?',
+                              style: TextStyle(fontSize: 14.0)),
+                          Switch(
+                            onChanged: (val) {
+                              setState(() {
+                                _petSlider = val;
+                              });
+                            },
+                            value: _petSlider,
+                            activeColor: Color(0xff201cbb),
+                            inactiveTrackColor: Color(0x88201cbb),
+                          ),
+                        ]),
+                  ),
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                const Divider(
+                  height: 10,
+                  thickness: 1,
+                  color: Color(0x69272324),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                  padding: const EdgeInsets.all(3.0),
+                  child: Center(
+                    child: Text('How often do you have friends over?',
+                        style: TextStyle(fontSize: 15.0)),
+                  ),
+                ),
+                Slider(
+                    label: friendsOverRating_[(_friendsOver * .01).round() - 1],
+                    value: (_friendsOver ?? 100.0).toDouble(),
+                    min: 100,
+                    max: 500,
+                    divisions: 4,
+                    activeColor: Color(0xff201cbb),
+                    inactiveColor: Color(0x88201cbb),
+                    onChanged: (val) {
+                      setState(() {
+                        _friendsOver = val.round();
+                      });
+                    }),
+                SizedBox(
+                  height: 10.0,
+                ),
+                const Divider(
+                  height: 10,
+                  thickness: 1,
+                  color: Color(0x69272324),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Done'),
+                      style: ButtonStyle(
+                        backgroundColor:
+                        MaterialStateProperty.all<Color>(Color(0xff201cbb)),
+                      )),
+                ),
+                ],
             ),
           ),
         ], //pages contain the list of onboarding screens

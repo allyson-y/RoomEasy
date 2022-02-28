@@ -18,7 +18,7 @@ class _ChangePreferencesScreenState extends State<ChangePreferencesScreen> {
   int _selfSleepStart = 10;
   int _selfSleepEnd = 12;
   int _selfMusicSliderVal = 100;
-  int _petsSensitive;
+  int _friendsOver = 100;
   bool _noiseSwitch;
   bool _selfDrinkSwitch;
   bool _roommateDrinkSwitch;
@@ -85,11 +85,11 @@ class _ChangePreferencesScreenState extends State<ChangePreferencesScreen> {
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
-                child: Center(
+                //child: Center(
                   child: Text(
                       'Do you prefer socializing or keeping to yourself?',
                       style: TextStyle(fontSize: 15.0)),
-                ),
+                //),
               ),
               Slider(
                   label:
@@ -116,10 +116,10 @@ class _ChangePreferencesScreenState extends State<ChangePreferencesScreen> {
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
-                child: Center(
+                //child: Center(
                   child: Text('How clean are you?',
                       style: TextStyle(fontSize: 15.0)),
-                ),
+                //,
               ),
               Slider(
                   label: "${(_selfCleanSliderVal ?? 100.0).toInt() ~/ 100}",
@@ -145,10 +145,10 @@ class _ChangePreferencesScreenState extends State<ChangePreferencesScreen> {
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
-                child: Center(
+                //child: Center(
                   child: Text('How clean do you want your roommate to be?',
                       style: TextStyle(fontSize: 15.0)),
-                ),
+                //),
               ),
               Slider(
                   label: "${(_roommateCleanSliderVal ?? 100.0).toInt() ~/ 100}",
@@ -174,10 +174,10 @@ class _ChangePreferencesScreenState extends State<ChangePreferencesScreen> {
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
-                child: Center(
+                //child: Center(
                   child: Text('When do sleep at night?',
                       style: TextStyle(fontSize: 15.0)),
-                ),
+                //),
               ),
               RangeSlider(
                 min: 6.0,
@@ -236,10 +236,10 @@ class _ChangePreferencesScreenState extends State<ChangePreferencesScreen> {
               Container(
                 margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
                 padding: const EdgeInsets.all(3.0),
-                child: Center(
+                //child: Center(
                   child: Text('How loud do you listen to music/videos?',
                       style: TextStyle(fontSize: 15.0)),
-                ),
+                //),
               ),
               Slider(
                   label: musicRating_[(_selfMusicSliderVal * .01).round() - 1],
@@ -348,29 +348,27 @@ class _ChangePreferencesScreenState extends State<ChangePreferencesScreen> {
                 thickness: 1,
                 color: Color(0x69272324),
               ),
-              Container(
-                margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-                padding: const EdgeInsets.all(3.0),
-                child: Center(
-                  child: Text('How loud do you listen to music/videos?',
-                      style: TextStyle(fontSize: 15.0)),
-                ),
-              ),
-              Slider(
-                  label: (_petsSensitive ?? 100.0).toDouble() == 100.0
-                      ? "no"
-                      : "yes",
-                  value: (_petsSensitive ?? 100.0).toDouble(),
-                  min: 100,
-                  max: 200,
-                  divisions: 1,
-                  activeColor: Color(0xff201cbb),
-                  inactiveColor: Color(0x88201cbb),
-                  onChanged: (val) {
-                    setState(() {
-                      _petsSensitive = val.round();
-                    });
-                  }),
+                  Container(
+                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                    padding: const EdgeInsets.all(3.0),
+                    //child: Center(
+                      child: Text('How often do you have friends over?',
+                          style: TextStyle(fontSize: 15.0)),
+                    //),
+                  ),
+                  Slider(
+                      label: friendsOverRating_[(_friendsOver * .01).round() - 1],
+                      value: (_friendsOver ?? 100.0).toDouble(),
+                      min: 100,
+                      max: 500,
+                      divisions: 4,
+                      activeColor: Color(0xff201cbb),
+                      inactiveColor: Color(0x88201cbb),
+                      onChanged: (val) {
+                        setState(() {
+                          _friendsOver = val.round();
+                        });
+                      }),
               SizedBox(
                 height: 10.0,
               ),
