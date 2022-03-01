@@ -274,12 +274,12 @@ class _RegisterState extends State<Register> {
 
 Widget _buildPopupDialog(BuildContext context) {
   return new AlertDialog(
-    title: const Text('Terms and Conditions'),
+    title: const Text('Verify your email'),
     content: new Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text("This is where the terms and conditions will go"),
+        Text("Please go to your email to verify your account before pressing Accept."),
       ],
     ),
     actions: <Widget>[
