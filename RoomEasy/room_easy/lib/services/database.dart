@@ -145,7 +145,11 @@ class DatabaseService {
       print(doc.data());
       return RmEasyUser(
         uid_: doc.get('uid'),
+        messageText_: "messageText_ [placement]",
         name_: doc.get('name'),
+        time_: "PLACEMENT TIME",
+        imageURL_:
+            "https://upload.wikimedia.org/wikipedia/en/thumb/a/a3/CMS_Stags_and_Athenas_logo.svg/1200px-CMS_Stags_and_Athenas_logo.svg.png",
         matchList_: (doc.get('matches')),
       );
       //return _userFromSnapshot(doc);

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:room_easy/models/user.dart';
 import 'package:room_easy/screens/home/profile/change_preferences.dart';
 import 'package:room_easy/screens/home/profile/edit_profile_screen.dart';
 import 'package:babstrap_settings_screen/babstrap_settings_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:room_easy/services/auth.dart';
+import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -13,6 +15,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    RmEasyUser currUser = Provider.of<RmEasyUser>(context);
     return Scaffold(
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -43,7 +46,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 // User card
                 BigUserCard(
                   cardColor: Color(0xffe24e3e),
-                  userName: "Gertrude",
+                  userName: currUser.name_,
                   backgroundMotifColor: Color(0xffe24e3e),
                   userProfilePic: null, // work on this later
                   cardActionWidget: SettingsItem(

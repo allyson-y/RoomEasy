@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:room_easy/models/chatProfiles.dart';
-import 'package:room_easy/screens/home/chat/chat_profile_card.dart';
-import 'package:room_easy/services/database.dart';
 import 'package:provider/provider.dart';
+import 'package:room_easy/models/user.dart';
+import 'package:room_easy/screens/home/chat/chat_profile_card.dart';
 
 class MessageScreen extends StatefulWidget {
   @override
@@ -22,8 +21,17 @@ class _MessageScreenState extends State<MessageScreen> {
   Widget build(BuildContext context) {
     print("MESSAGES SCREEN BUILT");
     //NOTE:eventually restrict chat profiles to only those you "matched" with.
-    List<RmEasyChatProfile> profileList_ = Provider.of<List<RmEasyChatProfile>>(
-        context); //allows real-time refresh of chat profiles!
+    RmEasyUser currUser = Provider.of<RmEasyUser>(context);
+    /* List<RmEasyUser> profileList_ = Provider.of<List<RmEasyUser>>(context);*/ //NOTE: This is a stream that isn't filtered. Maybe use this when presenting?
+
+    List<RmEasyUser> profileList_ = Provider.of<List<RmEasyUser>>(context)
+        .where(
+            (val) => ((currUser.matchList_ != null) & (val.matchList_ != null)))
+        .toList();
+    /*currUser.matchList_.contains(val.uid_) &
+            val.matchList_.contains(currUser.uid_))*/
+    //allows real-time refresh of chat profiles!
+
     print(profileList_);
     return (profileList_ == null)
         ? SpinKitDancingSquare(
@@ -86,13 +94,13 @@ class _MessageScreenState extends State<MessageScreen> {
                     physics: NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return ProfileCard(
-                        name: profileList_[index].name,
-                        messageText: profileList_[index].messageText,
-                        imageUrl: profileList_[index].imageURL,
-                        time: profileList_[index].time,
-                        isMessageRead: (index == 0 || index == 3)
-                            ? true
-                            : false, //CHANGE THIS
+                        name: profileList_[index].name_,
+                        messageText: profileList_[index].messageText_,
+                        imageUrl: profileList_[index].imageURL_,
+                        time: profileList_[index].time_,
+                        isMessageRead:
+                            (index == 0 || index == 3) ? true : false,
+                        //CHANGE THIS
                         uidReceiver_: profileList_[index].uid_,
                       );
                     },
