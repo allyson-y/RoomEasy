@@ -48,7 +48,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   cardColor: Color(0xffe24e3e),
                   userName: currUser.name_,
                   backgroundMotifColor: Color(0xffe24e3e),
-                  userProfilePic: null, // work on this later
+                  userProfilePic:
+                      NetworkImage(currUser.imageURL_), // work on this later
                   cardActionWidget: SettingsItem(
                     icons: Icons.edit,
                     iconStyle: IconStyle(

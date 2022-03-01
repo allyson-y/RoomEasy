@@ -64,6 +64,8 @@ class DatabaseService {
         grade_: snapshot.get('grade'),
         gender_: snapshot.get('gender'),
         matchList_: snapshot.get('matches'),
+        imageURL_:
+            "https://upload.wikimedia.org/wikipedia/en/thumb/a/a3/CMS_Stags_and_Athenas_logo.svg/1200px-CMS_Stags_and_Athenas_logo.svg.png",
         surveyComplete_: snapshot.get('surveyComplete'));
   }
 
