@@ -50,6 +50,7 @@ class RoomEasy extends StatelessWidget {
             value: DatabaseService().allUsers),
       ],
       child: MaterialApp(
+        theme: ThemeData(fontFamily: 'Comfortaa'),
         home: Wrapper(),
       ),
     );

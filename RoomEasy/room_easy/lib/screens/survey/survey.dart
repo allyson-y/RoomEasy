@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
-import 'package:room_easy/models/user.dart';
 import 'package:room_easy/services/auth.dart';
 import 'package:room_easy/services/database.dart';
 import 'package:room_easy/shared/helper_functions.dart';
@@ -11,6 +10,8 @@ class Survey extends StatefulWidget with ChangeNotifier {
 }
 
 class _SurveyState extends State<Survey> {
+  bool _showNextButton = true;
+  bool _showDoneButton = true;
   int _friendlySliderVal = 100;
   int _selfCleanSliderVal;
   int _roommateCleanSliderVal;
@@ -18,10 +19,10 @@ class _SurveyState extends State<Survey> {
   int _selfSleepEnd = 12;
   int _selfMusicSliderVal = 100;
   int _friendsOver = 100;
-  bool _noiseSwitch;
-  bool _selfDrinkSwitch;
-  bool _roommateDrinkSwitch;
-  bool _petSlider;
+  bool _noiseSwitch = false;
+  bool _selfDrinkSwitch = false;
+  bool _roommateDrinkSwitch = false;
+  bool _petSlider = false;
 
   List<String> friendlyRating_ = [
     "keep to myself",
@@ -59,164 +60,164 @@ class _SurveyState extends State<Survey> {
         },
         skip: const Text("Skip"),
         done: const Text("Done", style: TextStyle(fontWeight: FontWeight.w600)),
-        showNextButton: true,
-        //showBackButton: true,
+        showNextButton: _showNextButton,
+        showBackButton: true,
         next: const Icon(Icons.arrow_forward),
-        //back: const Icon(Icons.arrow_back),
+        back: const Icon(Icons.arrow_back),
         freeze: true,
         scrollPhysics: const BouncingScrollPhysics(),
         pages: [
           PageViewModel(
             title: "Customize your preferences",
             bodyWidget: Form(
-              child: Column(
-                children: <Widget>[
-                  //NOTE: Can we encapsulate the Slider-Text combination into a single custom class? A worry is that the variables we pass in not might get passed by reference.
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-                    padding: const EdgeInsets.all(3.0),
-                    child: Center(
-                      child: Text(
-                          'Do you prefer socializing or keeping to yourself?',
-                          style: TextStyle(fontSize: 15.0)),
-                    ),
+              child: Column(children: <Widget>[
+                //NOTE: Can we encapsulate the Slider-Text combination into a single custom class? A worry is that the variables we pass in not might get passed by reference.
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                  padding: const EdgeInsets.all(3.0),
+                  child: Center(
+                    child: Text(
+                        'Do you prefer socializing or keeping to yourself?',
+                        style: TextStyle(fontSize: 15.0)),
                   ),
-                  Slider(
-                      label:
-                      friendlyRating_[(_friendlySliderVal * .01).round() - 1],
-                      value: (_friendlySliderVal ?? 100.0).toDouble(),
-                      min: 100,
-                      max: 500,
-                      divisions: 4,
-                      activeColor: Color(0xff201cbb),
-                      inactiveColor: Color(0x88201cbb),
-                      onChanged: (val) {
-                        setState(() {
-                          _friendlySliderVal = val.round();
-                        });
-                      }),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  const Divider(
-                    height: 10,
-                    thickness: 1,
-                    color: Color(0x69272324),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-                    padding: const EdgeInsets.all(3.0),
-                    child: Center(
-                      child: Text('How clean are you?',
-                          style: TextStyle(fontSize: 15.0)),
-                    ),
-                  ),
-                  Slider(
-                      label: "${(_selfCleanSliderVal ?? 100.0).toInt() ~/ 100}",
-                      value: (_selfCleanSliderVal ?? 100.0).toDouble(),
-                      min: 100,
-                      max: 500,
-                      divisions: 4,
-                      activeColor: Color(0xff201cbb),
-                      inactiveColor: Color(0x88201cbb),
-                      onChanged: (val) {
-                        setState(() {
-                          _selfCleanSliderVal = val.round();
-                        });
-                      }),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  const Divider(
-                    height: 10,
-                    thickness: 1,
-                    color: Color(0x69272324),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-                    padding: const EdgeInsets.all(3.0),
-                    child: Center(
-                      child: Text('How clean do you want your roommate to be?',
-                          style: TextStyle(fontSize: 15.0)),
-                    ),
-                  ),
-                  Slider(
-                      label: "${(_roommateCleanSliderVal ?? 100.0).toInt() ~/ 100}",
-                      value: (_roommateCleanSliderVal ?? 100.0).toDouble(),
-                      min: 100,
-                      max: 500,
-                      divisions: 4,
-                      activeColor: Color(0xff201cbb),
-                      inactiveColor: Color(0x88201cbb),
-                      onChanged: (val) {
-                        setState(() {
-                          _roommateCleanSliderVal = val.round();
-                        });
-                      }),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  const Divider(
-                    height: 10,
-                    thickness: 1,
-                    color: Color(0x69272324),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-                    padding: const EdgeInsets.all(3.0),
-                    child: Center(
-                      child: Text('When do sleep at night?',
-                          style: TextStyle(fontSize: 15.0)),
-                    ),
-                  ),
-                  RangeSlider(
-                    min: 6.0,
-                    max: 18.0,
-                    divisions: 12,
+                ),
+                Slider(
+                    label:
+                        friendlyRating_[(_friendlySliderVal * .01).round() - 1],
+                    value: (_friendlySliderVal ?? 100.0).toDouble(),
+                    min: 100,
+                    max: 500,
+                    divisions: 4,
                     activeColor: Color(0xff201cbb),
                     inactiveColor: Color(0x88201cbb),
-                    values: RangeValues((_selfSleepStart ?? 10).toDouble(),
-                        (_selfSleepEnd ?? 12).toDouble()),
-                    labels: RangeLabels(
-                        HelperFunctions().sleepTimeFormat(_selfSleepStart.round()),
-                        HelperFunctions().sleepTimeFormat(_selfSleepEnd.round())),
-                    onChanged: (values) {
+                    onChanged: (val) {
                       setState(() {
-                        _selfSleepStart = values.start.round();
-                        _selfSleepEnd = values.end.round();
+                        _friendlySliderVal = val.round();
                       });
-                    },
+                    }),
+                SizedBox(
+                  height: 10.0,
+                ),
+                const Divider(
+                  height: 10,
+                  thickness: 1,
+                  color: Color(0x69272324),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                  padding: const EdgeInsets.all(3.0),
+                  child: Center(
+                    child: Text('How clean are you?',
+                        style: TextStyle(fontSize: 15.0)),
                   ),
-                  SizedBox(
-                    height: 10.0,
+                ),
+                Slider(
+                    label: "${(_selfCleanSliderVal ?? 100.0).toInt() ~/ 100}",
+                    value: (_selfCleanSliderVal ?? 100.0).toDouble(),
+                    min: 100,
+                    max: 500,
+                    divisions: 4,
+                    activeColor: Color(0xff201cbb),
+                    inactiveColor: Color(0x88201cbb),
+                    onChanged: (val) {
+                      setState(() {
+                        _selfCleanSliderVal = val.round();
+                      });
+                    }),
+                SizedBox(
+                  height: 10.0,
+                ),
+                const Divider(
+                  height: 10,
+                  thickness: 1,
+                  color: Color(0x69272324),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                  padding: const EdgeInsets.all(3.0),
+                  child: Center(
+                    child: Text('How clean do you want your roommate to be?',
+                        style: TextStyle(fontSize: 15.0)),
                   ),
-                  const Divider(
-                    height: 10,
-                    thickness: 1,
-                    color: Color(0x69272324),
+                ),
+                Slider(
+                    label:
+                        "${(_roommateCleanSliderVal ?? 100.0).toInt() ~/ 100}",
+                    value: (_roommateCleanSliderVal ?? 100.0).toDouble(),
+                    min: 100,
+                    max: 500,
+                    divisions: 4,
+                    activeColor: Color(0xff201cbb),
+                    inactiveColor: Color(0x88201cbb),
+                    onChanged: (val) {
+                      setState(() {
+                        _roommateCleanSliderVal = val.round();
+                      });
+                    }),
+                SizedBox(
+                  height: 10.0,
+                ),
+                const Divider(
+                  height: 10,
+                  thickness: 1,
+                  color: Color(0x69272324),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                  padding: const EdgeInsets.all(3.0),
+                  child: Center(
+                    child: Text('When do sleep at night?',
+                        style: TextStyle(fontSize: 15.0)),
                   ),
-                  Container(
-                    margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-                    padding: const EdgeInsets.all(3.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Text('Are you sensitive to noise?',
-                              style: TextStyle(fontSize: 15.0)),
-                          Switch(
-                            onChanged: (val) {
-                              setState(() {
-                                _noiseSwitch = val;
-                              });
-                            },
-                            value: _noiseSwitch,
-                            activeColor: Color(0xff201cbb),
-                            inactiveTrackColor: Color(0x88201cbb),
-                          ),
-                        ]),
-                  ),
-                ]
-              ),
+                ),
+                RangeSlider(
+                  min: 6.0,
+                  max: 18.0,
+                  divisions: 12,
+                  activeColor: Color(0xff201cbb),
+                  inactiveColor: Color(0x88201cbb),
+                  values: RangeValues((_selfSleepStart ?? 10).toDouble(),
+                      (_selfSleepEnd ?? 12).toDouble()),
+                  labels: RangeLabels(
+                      HelperFunctions()
+                          .sleepTimeFormat(_selfSleepStart.round()),
+                      HelperFunctions().sleepTimeFormat(_selfSleepEnd.round())),
+                  onChanged: (values) {
+                    setState(() {
+                      _selfSleepStart = values.start.round();
+                      _selfSleepEnd = values.end.round();
+                    });
+                  },
+                ),
+                SizedBox(
+                  height: 10.0,
+                ),
+                const Divider(
+                  height: 10,
+                  thickness: 1,
+                  color: Color(0x69272324),
+                ),
+                Container(
+                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
+                  padding: const EdgeInsets.all(3.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text('Are you sensitive to noise?',
+                            style: TextStyle(fontSize: 15.0)),
+                        Switch(
+                          value: _noiseSwitch,
+                          onChanged: (val) {
+                            setState(() {
+                              _noiseSwitch = val;
+                            });
+                          },
+                          activeColor: Color(0xff201cbb),
+                          inactiveTrackColor: Color(0x88201cbb),
+                        ),
+                      ]),
+                ),
+              ]),
             ),
           ),
           PageViewModel(
@@ -232,7 +233,8 @@ class _SurveyState extends State<Survey> {
                   ),
                 ),
                 Slider(
-                    label: musicRating_[(_selfMusicSliderVal * .01).round() - 1],
+                    label:
+                        musicRating_[(_selfMusicSliderVal * .01).round() - 1],
                     value: (_selfMusicSliderVal ?? 100.0).toDouble(),
                     min: 100,
                     max: 500,
@@ -261,12 +263,12 @@ class _SurveyState extends State<Survey> {
                         Text('Do you drink/smoke?',
                             style: TextStyle(fontSize: 15.0)),
                         Switch(
+                          value: _selfDrinkSwitch,
                           onChanged: (val) {
                             setState(() {
                               _selfDrinkSwitch = val;
                             });
                           },
-                          value: _selfDrinkSwitch,
                           activeColor: Color(0xff201cbb),
                           inactiveThumbColor: Color(0x88201cbb),
                         ),
@@ -279,26 +281,6 @@ class _SurveyState extends State<Survey> {
                   height: 10,
                   thickness: 1,
                   color: Color(0x69272324),
-                ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
-                  padding: const EdgeInsets.all(3.0),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Text('Do you care if your roommate drinks/smokes?',
-                            style: TextStyle(fontSize: 13.0)),
-                        Switch(
-                          onChanged: (val) {
-                            setState(() {
-                              _roommateDrinkSwitch = val;
-                            });
-                          },
-                          value: _roommateDrinkSwitch,
-                          activeColor: Color(0xff201cbb),
-                          inactiveTrackColor: Color(0x88201cbb),
-                        ),
-                      ]),
                 ),
                 SizedBox(
                   height: 10.0,
@@ -318,12 +300,12 @@ class _SurveyState extends State<Survey> {
                           Text('Are you comfortable with pets?',
                               style: TextStyle(fontSize: 14.0)),
                           Switch(
+                            value: _petSlider,
                             onChanged: (val) {
                               setState(() {
                                 _petSlider = val;
                               });
                             },
-                            value: _petSlider,
                             activeColor: Color(0xff201cbb),
                             inactiveTrackColor: Color(0x88201cbb),
                           ),
@@ -367,20 +349,51 @@ class _SurveyState extends State<Survey> {
                   thickness: 1,
                   color: Color(0x69272324),
                 ),
-                Container(
-                  margin: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
-                  alignment: Alignment.center,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text('Done'),
-                      style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all<Color>(Color(0xff201cbb)),
-                      )),
+              ],
+            ),
+          ),
+          /**
+           * Third Survey Page
+           */
+          PageViewModel(
+            title: "Open Response",
+            bodyWidget: Column(
+              children: <Widget>[
+                Text(
+                  "Thought provoking question here?",
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
                 ),
-                ],
+                SizedBox(
+                  height: 50,
+                ),
+                TextFormField(
+                  style: TextStyle(fontSize: 20),
+                  decoration: InputDecoration(labelText: 'Answer here!'),
+                  onChanged: (value) {
+                    if (value.trim().isNotEmpty) {
+                      _showNextButton = true;
+                    }
+                  },
+                )
+              ],
+            ),
+          ),
+          PageViewModel(
+            title: "Open Response",
+            bodyWidget: Column(
+              children: <Widget>[
+                Text(
+                  "Thought provoking question number 2 here?",
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
+                TextFormField(
+                  style: TextStyle(fontSize: 20),
+                  decoration: InputDecoration(labelText: 'Answer here!'),
+                )
+              ],
             ),
           ),
         ], //pages contain the list of onboarding screens
