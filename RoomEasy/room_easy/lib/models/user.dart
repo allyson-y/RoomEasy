@@ -21,6 +21,7 @@ class RmEasyUser {
   String messageText_;
   String time_;
   String imageURL_;
+  String selfDescription_;
   var dob_;
   List<dynamic> matchList_; //list of uids_ that contain matches
   RmEasyUser(
@@ -33,5 +34,6 @@ class RmEasyUser {
       this.surveyComplete_,
       this.messageText_,
       this.time_,
-      this.imageURL_});
+      this.imageURL_,
+      this.selfDescription_});
 }

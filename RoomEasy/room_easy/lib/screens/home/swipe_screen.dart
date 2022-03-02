@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 import 'package:room_easy/models/user.dart';
+import 'package:room_easy/screens/home/swipe/swipe_card.dart';
 import 'package:room_easy/shared/helper_functions.dart';
 
 /**
@@ -28,12 +29,15 @@ class _SwipeScreenState extends State<SwipeScreen> {
 
     return (userList == null)
         ? SpinKitChasingDots(color: Color(0xffe24e3e), size: 50)
-        : PageView(
-            controller: controller,
-            //NOTE: do we want to pass in a provider in this build function and for each PageView pass in a roomeasy user so we can sort of load in all the roomeasy
-            //users before this runs. idk. Pros would be that we woudn't have to do build for each pageview that loads to load in our own user.
-            children: HelperFunctions().mapRmEasyUserToWidget(
-                userList), //NOTE: probably just map here, instead of calling a separate HelperFunctions() for readibility
+        : SafeArea(
+            child: PageView(
+              controller: controller,
+              //NOTE: do we want to pass in a provider in this build function and for each PageView pass in a roomeasy user so we can sort of load in all the roomeasy
+              //users before this runs. idk. Pros would be that we woudn't have to do build for each pageview that loads to load in our own user.
+              children: userList.map((user) {
+                return SwipeCard(user);
+              }).toList(), //NOTE: probably just map here, instead of calling a separate HelperFunctions() for readibility
+            ),
           );
   }
 }

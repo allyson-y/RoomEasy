@@ -57,7 +57,6 @@ class _SwipeScreenBackState extends State<SwipeScreenBack> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffffefaf),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(4.0),
         physics: BouncingScrollPhysics(),
@@ -91,8 +90,7 @@ class _SwipeScreenBackState extends State<SwipeScreenBack> {
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
             //child: Center(
-            child: Text(friendlyRating_[1],
-                style: TextStyle(fontSize: 15.0)),
+            child: Text(friendlyRating_[1], style: TextStyle(fontSize: 15.0)),
           ),
           SizedBox(
             height: 10.0,
@@ -113,7 +111,8 @@ class _SwipeScreenBackState extends State<SwipeScreenBack> {
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
             //child: Center(
-            child: Text(_selfCleanSliderVal.toString(), style: TextStyle(fontSize: 15.0)),
+            child: Text(_selfCleanSliderVal.toString(),
+                style: TextStyle(fontSize: 15.0)),
             //,
           ),
           SizedBox(
@@ -154,7 +153,8 @@ class _SwipeScreenBackState extends State<SwipeScreenBack> {
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
             //child: Center(
-            child: Text(_selfSleepStart.toString() + " to " + _selfSleepEnd.toString(),
+            child: Text(
+                _selfSleepStart.toString() + " to " + _selfSleepEnd.toString(),
                 style: TextStyle(fontSize: 15.0)),
             //),
           ),
@@ -170,14 +170,12 @@ class _SwipeScreenBackState extends State<SwipeScreenBack> {
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
             child: Text('Are you sensitive to noise?',
-                  style: TextStyle(fontSize: 15.0)),
+                style: TextStyle(fontSize: 15.0)),
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
-
-            child: Text(_noisePreference,
-                style: TextStyle(fontSize: 15.0)),
+            child: Text(_noisePreference, style: TextStyle(fontSize: 15.0)),
           ),
           SizedBox(
             height: 10.0,
@@ -199,8 +197,7 @@ class _SwipeScreenBackState extends State<SwipeScreenBack> {
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
             //child: Center(
-            child: Text(musicRating_[2],
-                style: TextStyle(fontSize: 15.0)),
+            child: Text(musicRating_[2], style: TextStyle(fontSize: 15.0)),
             //),
           ),
           SizedBox(
@@ -214,7 +211,8 @@ class _SwipeScreenBackState extends State<SwipeScreenBack> {
           Container(
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
-            child: Text('Do you drink/smoke?', style: TextStyle(fontSize: 15.0)),
+            child:
+                Text('Do you drink/smoke?', style: TextStyle(fontSize: 15.0)),
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
@@ -233,13 +231,12 @@ class _SwipeScreenBackState extends State<SwipeScreenBack> {
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
             child: Text('Do you care if your roommate drinks/smokes?',
-                      style: TextStyle(fontSize: 14.0)),
+                style: TextStyle(fontSize: 14.0)),
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
-            child: Text(_smokeRoommate,
-                style: TextStyle(fontSize: 14.0)),
+            child: Text(_smokeRoommate, style: TextStyle(fontSize: 14.0)),
           ),
           SizedBox(
             height: 10.0,
@@ -253,13 +250,12 @@ class _SwipeScreenBackState extends State<SwipeScreenBack> {
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
             child: Text('Are you comfortable with pets?',
-                        style: TextStyle(fontSize: 14.0)),
+                style: TextStyle(fontSize: 14.0)),
           ),
           Container(
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
-            child: Text(_petsPreference,
-                style: TextStyle(fontSize: 14.0)),
+            child: Text(_petsPreference, style: TextStyle(fontSize: 14.0)),
           ),
           SizedBox(
             height: 10.0,
@@ -281,8 +277,8 @@ class _SwipeScreenBackState extends State<SwipeScreenBack> {
             margin: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 5.0),
             padding: const EdgeInsets.all(3.0),
             //child: Center(
-            child: Text(friendsOverRating_[2],
-                style: TextStyle(fontSize: 15.0)),
+            child:
+                Text(friendsOverRating_[2], style: TextStyle(fontSize: 15.0)),
             //),
           ),
           SizedBox(

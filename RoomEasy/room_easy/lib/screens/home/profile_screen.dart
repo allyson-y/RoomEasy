@@ -17,6 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     RmEasyUser currUser = Provider.of<RmEasyUser>(context);
     return Scaffold(
+      backgroundColor: Color.fromARGB(100, 229, 229, 234),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -44,25 +45,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   true, //https://stackoverflow.com/questions/54007073/what-does-the-shrinkwrap-property-do-in-flutter
               children: <Widget>[
                 // User card
-                BigUserCard(
-                  cardColor: Color(0xffe24e3e),
+                SimpleUserCard(
                   userName: currUser.name_,
-                  backgroundMotifColor: Color(0xffe24e3e),
                   userProfilePic:
                       NetworkImage(currUser.imageURL_), // work on this later
-                  cardActionWidget: SettingsItem(
-                    icons: Icons.edit,
-                    iconStyle: IconStyle(
-                      withBackground: true,
-                      borderRadius: 5,
-                      backgroundColor: Colors.yellow[600],
-                    ),
-                    title: "Modify",
-                    subtitle: "Tap to change your data",
-                    onTap: () {
-                      print("OK");
-                    },
+                  imageRadius: 20,
+                ),
+                SettingsItem(
+                  icons: Icons.edit,
+                  iconStyle: IconStyle(
+                    withBackground: true,
+                    borderRadius: 5,
+                    backgroundColor: Colors.yellow[600],
                   ),
+                  title: "Modify",
+                  subtitle: "Tap to change your data",
+                  onTap: () {
+                    print("OK");
+                  },
+                ),
+                Center(
+                  child: Text(currUser.selfDescription_ ?? "HJe"),
                 ),
                 SettingsGroup(
                   iconItemSize: 30,

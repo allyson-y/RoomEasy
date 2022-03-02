@@ -50,10 +50,13 @@ class _SwipeCardState extends State<SwipeCard> {
             color: Colors.pink,
             size: 50,
           )
-        : FlipCard(
-            direction: FlipDirection.HORIZONTAL,
-            front: SwipeScreenFront(widget.user_),
-            back: SwipeScreenBack(widget.user_),
+        : Card(
+            margin: EdgeInsets.all(20),
+            child: FlipCard(
+              direction: FlipDirection.HORIZONTAL,
+              front: SwipeScreenFront(widget.user_),
+              back: SwipeScreenBack(widget.user_),
+            ),
           );
   }
 }
