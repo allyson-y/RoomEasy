@@ -70,7 +70,8 @@ class _SignInState extends State<SignIn> {
                         decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
                               // width: 0.0 produces a thin "hairline" border
-                              borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 1.0),
                             ),
                             border: OutlineInputBorder(),
                             labelText: 'Email',
@@ -89,11 +90,12 @@ class _SignInState extends State<SignIn> {
                         decoration: InputDecoration(
                             enabledBorder: const OutlineInputBorder(
                               // width: 0.0 produces a thin "hairline" border
-                              borderSide: const BorderSide(color: Colors.black, width: 1.0),
+                              borderSide: const BorderSide(
+                                  color: Colors.black, width: 1.0),
                             ),
                             border: OutlineInputBorder(
-                                borderSide: new BorderSide(color: Color(0xff201cbb))
-                            ),
+                                borderSide:
+                                    new BorderSide(color: Color(0xff201cbb))),
                             labelText: 'Password',
                             hintText: 'Enter secure password'),
                       ),
@@ -107,7 +109,8 @@ class _SignInState extends State<SignIn> {
                       },
                       child: Text(
                         'Forgot Password',
-                        style: TextStyle(color: Color(0xff201cbb), fontSize: 15),
+                        style:
+                            TextStyle(color: Color(0xff201cbb), fontSize: 15),
                       ),
                     ),
                     Container(
@@ -118,7 +121,8 @@ class _SignInState extends State<SignIn> {
                           borderRadius: BorderRadius.circular(20)),
                       child: ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Color(0xff201cbb)),
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Color(0xff201cbb)),
                           shape:
                               MaterialStateProperty.all<RoundedRectangleBorder>(
                             RoundedRectangleBorder(
@@ -169,9 +173,9 @@ class _SignInState extends State<SignIn> {
                             },
                             child: Container(
                               width: double.infinity,
-                              height: 100,
-                              color: Colors.green,
-                              child: Text('You can try'),
+                              height: 50,
+                              child:
+                                  Center(child: Text('Tap here to register')),
                             )),
                       ),
                     ),

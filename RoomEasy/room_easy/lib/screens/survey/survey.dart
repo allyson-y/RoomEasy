@@ -354,6 +354,7 @@ class _SurveyState extends State<Survey> {
           ),
           /**
            * Third Survey Page
+           * NOTE: Do we want to encapsulate the pageviewmodels with the questions into custom classes?
            */
           PageViewModel(
             title: "Open Response",
@@ -367,6 +368,7 @@ class _SurveyState extends State<Survey> {
                   height: 50,
                 ),
                 TextFormField(
+                  maxLines: null,
                   style: TextStyle(fontSize: 20),
                   decoration: InputDecoration(labelText: 'Answer here!'),
                   onChanged: (value) {
@@ -390,6 +392,7 @@ class _SurveyState extends State<Survey> {
                   height: 50,
                 ),
                 TextFormField(
+                  maxLines: null,
                   style: TextStyle(fontSize: 20),
                   decoration: InputDecoration(labelText: 'Answer here!'),
                 )

@@ -29,7 +29,7 @@ class _SwipeScreenFrontState extends State<SwipeScreenFront> {
               children: [
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                    "https://i5.wal.co/asr/d90b3969-acb4-4ed1-ae23-2c505b7baf33.100242461d922915c2159e4b84e35366.jpeg?odnBg=ffffff&odnHeight=612&odnWidth=612",
+                    widget.user_.imageURL_,
                   ),
                   radius: 50.0,
                 ),

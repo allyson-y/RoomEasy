@@ -110,7 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         backgroundColor: Colors.purple,
                       ),
                       title: 'About',
-                      subtitle: "Learn more about Ziar'App",
+                      subtitle: "Learn More about RoomEasy",
                     ),
                   ],
                 ),

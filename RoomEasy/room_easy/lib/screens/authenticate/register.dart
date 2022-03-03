@@ -259,8 +259,7 @@ class _RegisterState extends State<Register> {
                             child: Container(
                               width: double.infinity,
                               height: 50,
-                              color: Colors.green,
-                              child: Text('You can try'),
+                              child: Center(child: Text('Tap here to sign in')),
                             )),
                       ),
                     ),
@@ -279,7 +278,8 @@ Widget _buildPopupDialog(BuildContext context) {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Text("Please go to your email to verify your account before pressing Accept."),
+        Text(
+            "Please go to your email to verify your account before pressing Accept."),
       ],
     ),
     actions: <Widget>[
